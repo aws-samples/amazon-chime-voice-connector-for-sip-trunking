@@ -1,0 +1,1575 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot 1`] = `
+Object {
+  "Outputs": Object {
+    "PSTNVoiceConnectorARN": Object {
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "arn:aws:chime:",
+            Object {
+              "Ref": "AWS::Region",
+            },
+            ":",
+            Object {
+              "Ref": "AWS::AccountId",
+            },
+            ":vc/",
+            Object {
+              "Fn::GetAtt": Array [
+                "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestpstnCustomResource27AF2C83",
+                "voiceConnectorId",
+              ],
+            },
+          ],
+        ],
+      },
+    },
+    "VoiceConnectorId": Object {
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "VOICECONNECTORID=",
+            Object {
+              "Fn::GetAtt": Array [
+                "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestpstnCustomResource27AF2C83",
+                "voiceConnectorId",
+              ],
+            },
+          ],
+        ],
+      },
+    },
+    "password": Object {
+      "Value": Object {
+        "Ref": "AsteriskInstanceDB134462cc869413d7c8117a",
+      },
+    },
+    "sipuri": Object {
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "agent@",
+            Object {
+              "Ref": "VPCasteriskEip406AFABB",
+            },
+          ],
+        ],
+      },
+    },
+    "ssmCommand": Object {
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "aws ssm start-session --target ",
+            Object {
+              "Ref": "AsteriskInstanceDB134462cc869413d7c8117a",
+            },
+          ],
+        ],
+      },
+    },
+    "voiceConnectorPhone": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberpstnCustomResource78CB2D67",
+          "phoneNumber",
+        ],
+      },
+    },
+    "websocket": Object {
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "ws://",
+            Object {
+              "Ref": "VPCasteriskEip406AFABB",
+            },
+            ":8088/ws",
+          ],
+        ],
+      },
+    },
+  },
+  "Parameters": Object {
+    "BootstrapVersion": Object {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+    "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmarm64gp2C96584B6F00A464EAD1953AFF4B05118Parameter": Object {
+      "Default": "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-arm64-gp2",
+      "Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
+    },
+  },
+  "Resources": Object {
+    "AWS679f53fac002430cb0da5b7982bd22872D164C4C": Object {
+      "DependsOn": Array [
+        "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "9ab58259097ac1249b4061ac6e823f78810b11c4c760a30324f6d012fe8e6440.zip",
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs12.x",
+        "Timeout": 120,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "AsteriskEIPAssociation3A327365": Object {
+      "Properties": Object {
+        "EIP": Object {
+          "Ref": "VPCasteriskEip406AFABB",
+        },
+        "InstanceId": Object {
+          "Ref": "AsteriskInstanceDB134462cc869413d7c8117a",
+        },
+      },
+      "Type": "AWS::EC2::EIPAssociation",
+    },
+    "AsteriskInstanceDB134462cc869413d7c8117a": Object {
+      "CreationPolicy": Object {
+        "ResourceSignal": Object {
+          "Count": 1,
+          "Timeout": "PT20M",
+        },
+      },
+      "DependsOn": Array [
+        "VPCasteriskEc2RoleDefaultPolicy170F5E41",
+        "VPCasteriskEc2Role6311600C",
+      ],
+      "Metadata": Object {
+        "AWS::CloudFormation::Init": Object {
+          "config": Object {
+            "commands": Object {
+              "000": Object {
+                "command": "chmod +x /etc/config_asterisk.sh",
+              },
+              "001": Object {
+                "command": "/etc/config_asterisk.sh",
+              },
+            },
+            "files": Object {
+              "/etc/asterisk/asterisk.conf": Object {
+                "content": "[options]
+runuser = asterisk
+rungroup = asterisk",
+                "encoding": "plain",
+                "group": "root",
+                "mode": "000644",
+                "owner": "root",
+              },
+              "/etc/asterisk/extensions.conf": Object {
+                "content": "; extensions.conf - the Asterisk dial plan
+[general]
+static=yes
+writeprotect=no
+clearglobalvars=no
+
+[catch_all]
+exten => _[+0-9].,1,Answer()
+exten => _[+0-9].,n,Wait(1)
+exten => _[+0-9].,n,Playback(hello-world)
+exten => _[+0-9].,n,Wait(1)
+exten => _[+0-9].,n,echo()
+exten => _[+0-9].,n,Wait(1)
+exten => _[+0-9].,n,Hangup()
+
+[from-voiceConnector]
+include => inbound_phone
+include => catch_all
+
+[from-phone]
+include => outbound_phone
+
+[outbound_phone]
+exten => _+X.,1,NoOP(Outbound Normal)
+same => n,Set(CALLERID(num)=PSTN_VOICE_CONNECTOR_PHONE)
+same => n,Dial(PJSIP/\\\\\${EXTEN}@PSTNVoiceConnector,20)
+same => n,Congestion
+
+[inbound_phone]
+exten => _[+0-9].,1,NoOP(Inbound Call to Client)
+same => n,Dial(PJSIP/agent)
+same => n,Hangup()",
+                "encoding": "plain",
+                "group": "root",
+                "mode": "000644",
+                "owner": "root",
+              },
+              "/etc/asterisk/http.conf": Object {
+                "content": "[general]
+enabled=yes
+bindaddr=0.0.0.0
+bindport=8088
+",
+                "encoding": "plain",
+                "group": "root",
+                "mode": "000644",
+                "owner": "root",
+              },
+              "/etc/asterisk/logger.conf": Object {
+                "content": "[general]
+[logfiles]
+console = verbose,notice,warning,error
+messages = notice,warning,error",
+                "encoding": "plain",
+                "group": "root",
+                "mode": "000644",
+                "owner": "root",
+              },
+              "/etc/asterisk/modules.conf": Object {
+                "content": "[modules]
+autoload = no
+
+; This is a minimal module load. We are loading only the modules
+; required for the Asterisk features used in the \\"Super Awesome
+; Company\\" configuration.
+
+; Applications
+
+load = app_bridgewait.so
+load = app_dial.so
+load = app_playback.so
+load = app_stack.so
+load = app_verbose.so
+load = app_voicemail.so
+load = app_directory.so
+load = app_confbridge.so
+load = app_queue.so
+load = app_echo.so
+load = app_while.so
+
+; Bridging
+
+load = bridge_builtin_features.so
+load = bridge_builtin_interval_features.so
+load = bridge_holding.so
+load = bridge_native_rtp.so
+load = bridge_simple.so
+load = bridge_softmix.so
+
+; Call Detail Records
+
+load = cdr_custom.so
+
+; Channel Drivers
+
+load = chan_bridge_media.so
+load = chan_pjsip.so
+
+; Codecs
+
+load = codec_gsm.so
+load = codec_resample.so
+load = codec_ulaw.so
+load = codec_g722.so
+
+; Formats
+
+load = format_gsm.so
+load = format_pcm.so
+load = format_wav_gsm.so
+load = format_wav.so
+
+; Functions
+
+load = func_callerid.so
+load = func_cdr.so
+load = func_pjsip_endpoint.so
+load = func_sorcery.so
+load = func_devstate.so
+load = func_strings.so
+load = func_cut.so
+load = func_rand.so
+load = func_shell.so
+
+; Core/PBX
+
+load = pbx_config.so
+
+; Resources
+
+load = res_http_websocket.so
+load = res_musiconhold.so
+load = res_pjproject.so
+load = res_pjsip_acl.so
+load = res_pjsip_authenticator_digest.so
+load = res_pjsip_caller_id.so
+load = res_pjsip_dialog_info_body_generator.so
+load = res_pjsip_diversion.so
+load = res_pjsip_dtmf_info.so
+load = res_pjsip_endpoint_identifier_anonymous.so
+load = res_pjsip_endpoint_identifier_ip.so
+load = res_pjsip_endpoint_identifier_user.so
+load = res_pjsip_exten_state.so
+load = res_pjsip_header_funcs.so
+load = res_pjsip_logger.so
+load = res_pjsip_messaging.so
+load = res_pjsip_mwi_body_generator.so
+load = res_pjsip_mwi.so
+load = res_pjsip_nat.so
+load = res_pjsip_notify.so
+load = res_pjsip_one_touch_record_info.so
+load = res_pjsip_outbound_authenticator_digest.so
+load = res_pjsip_outbound_publish.so
+load = res_pjsip_outbound_registration.so
+load = res_pjsip_path.so
+load = res_pjsip_pidf_body_generator.so
+load = res_pjsip_pidf_digium_body_supplement.so
+load = res_pjsip_pidf_eyebeam_body_supplement.so
+load = res_pjsip_publish_asterisk.so
+load = res_pjsip_pubsub.so
+load = res_pjsip_refer.so
+load = res_pjsip_registrar.so
+load = res_pjsip_rfc3326.so
+load = res_pjsip_sdp_rtp.so
+load = res_pjsip_send_to_voicemail.so
+load = res_pjsip_session.so
+load = res_pjsip.so
+load = res_pjsip_t38.so
+load = res_pjsip_transport_websocket.so
+load = res_pjsip_xpidf_body_generator.so
+load = res_rtp_asterisk.so
+load = res_sorcery_astdb.so
+load = res_sorcery_config.so
+load = res_sorcery_memory.so
+load = res_sorcery_realtime.so
+load = res_timing_timerfd.so
+load = res_pjsip_transport_websocket.so
+load = res_http_websocket.so
+load = res_srtp.so
+
+; Do not load res_hep and kin unless you are using HEP monitoring
+; <http://sipcapture.org> in your network.
+
+noload = res_hep.so
+noload = res_hep_pjsip.so
+noload = res_hep_rtcp.so",
+                "encoding": "plain",
+                "group": "root",
+                "mode": "000644",
+                "owner": "root",
+              },
+              "/etc/asterisk/pjsip.conf": Object {
+                "content": "[udp]
+type=transport
+protocol=udp
+bind=0.0.0.0
+external_media_address=IP_ADDRESS
+external_signaling_address=IP_ADDRESS
+allow_reload=yes
+
+[ws]
+type=transport
+protocol=ws
+bind=0.0.0.0
+external_media_address=IP_ADDRESS
+external_signaling_address=IP_ADDRESS
+allow_reload=yes
+
+[PSTNVoiceConnector]
+type=endpoint
+context=from-voiceConnector
+transport=udp
+disallow=all
+allow=ulaw
+aors=PSTNVoiceConnector
+direct_media=no
+ice_support=yes
+force_rport=yes
+
+[PSTNVoiceConnector]
+type=identify
+endpoint=PSTNVoiceConnector
+match=PSTN_VOICE_CONNECTOR
+
+[PSTNVoiceConnector]
+type=aor
+contact=sip:PSTN_VOICE_CONNECTOR
+qualify_frequency=30
+
+[agent]
+type=endpoint
+aors=agent
+auth=agent
+dtls_auto_generate_cert=yes
+webrtc=yes
+context=from-phone
+disallow=all
+allow=ulaw
+
+[agent]
+type=auth
+auth_type=userpass
+username=agent
+password=INSTANCE_ID
+
+[agent]
+type=aor
+max_contacts=5",
+                "encoding": "plain",
+                "group": "root",
+                "mode": "000644",
+                "owner": "root",
+              },
+              "/etc/asterisk/rtp.conf": Object {
+                "content": "[general]
+
+stunaddr=stun.kinesisvideo.us-east-1.amazonaws.com:443",
+                "encoding": "plain",
+                "group": "root",
+                "mode": "000644",
+                "owner": "root",
+              },
+              "/etc/config_asterisk.sh": Object {
+                "content": "#!/bin/bash -xe
+IP=$( jq -r '.IP' /etc/config.json )
+PSTN_VOICE_CONNECTOR=$( jq -r '.PSTNVoiceConnector' /etc/config.json )
+PSTN_VOICE_CONNECTOR_PHONE=$( jq -r '.PSTNVoiceConnectorPhone' /etc/config.json )
+TOKEN=\`curl -X PUT \\"http://169.254.169.254/latest/api/token\\" -H \\"X-aws-ec2-metadata-token-ttl-seconds: 21600\\"\`
+LOCAL_HOSTNAME=$( curl -H \\"X-aws-ec2-metadata-token: $TOKEN\\" -v http://169.254.169.254/latest/meta-data/public-hostname )
+INSTANCE_ID=$( curl -H \\"X-aws-ec2-metadata-token: $TOKEN\\" -v http://169.254.169.254/latest/meta-data/instance-id )
+
+sed -i \\"s/IP_ADDRESS/$IP/g\\" /etc/asterisk/pjsip.conf
+sed -i \\"s/INSTANCE_ID/$INSTANCE_ID/g\\" /etc/asterisk/pjsip.conf
+sed -i \\"s/PSTN_VOICE_CONNECTOR/$PSTN_VOICE_CONNECTOR/g\\" /etc/asterisk/pjsip.conf
+sed -i \\"s/PSTN_VOICE_CONNECTOR_PHONE/$PSTN_VOICE_CONNECTOR_PHONE/g\\" /etc/asterisk/extensions.conf
+
+groupadd asterisk
+useradd -r -d /var/lib/asterisk -g asterisk asterisk
+usermod -aG audio,dialout asterisk
+chown -R asterisk.asterisk /etc/asterisk
+chown -R asterisk.asterisk /var/{lib,log,spool}/asterisk
+
+systemctl start asterisk
+
+",
+                "encoding": "plain",
+                "group": "root",
+                "mode": "000644",
+                "owner": "root",
+              },
+            },
+          },
+          "configSets": Object {
+            "default": Array [
+              "install",
+              "config",
+            ],
+          },
+          "install": Object {
+            "commands": Object {
+              "000": Object {
+                "command": "chmod +x /etc/install.sh",
+              },
+              "001": Object {
+                "command": "cd /tmp",
+              },
+              "002": Object {
+                "command": "/etc/install.sh 2>&1 | tee /var/log/asterisk_install.log",
+              },
+            },
+            "files": Object {
+              "/etc/config.json": Object {
+                "content": Object {
+                  "IP": Object {
+                    "Ref": "VPCasteriskEip406AFABB",
+                  },
+                  "PSTNVoiceConnector": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        Object {
+                          "Fn::GetAtt": Array [
+                            "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestpstnCustomResource27AF2C83",
+                            "voiceConnectorId",
+                          ],
+                        },
+                        ".voiceconnector.chime.aws",
+                      ],
+                    ],
+                  },
+                  "PSTNVoiceConnectorPhone": Object {
+                    "Fn::GetAtt": Array [
+                      "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberpstnCustomResource78CB2D67",
+                      "phoneNumber",
+                    ],
+                  },
+                  "REGION": Object {
+                    "Ref": "AWS::Region",
+                  },
+                },
+                "group": "root",
+                "mode": "000644",
+                "owner": "root",
+              },
+              "/etc/install.sh": Object {
+                "content": "#!/bin/bash -xe
+## Copyright Amazon.com Inc. or its affiliates.
+HOMEDIR=/home/ec2-user
+cd /tmp
+yum update -y
+yum install net-tools -y
+yum install wget -y
+yum -y install make gcc gcc-c++ make subversion libxml2-devel ncurses-devel openssl-devel vim-enhanced man glibc-devel autoconf libnewt kernel-devel kernel-headers linux-headers openssl-devel zlib-devel libsrtp libsrtp-devel uuid libuuid-devel mariadb-server jansson-devel libsqlite3x libsqlite3x-devel epel-release.noarch bash-completion bash-completion-extras unixODBC unixODBC-devel libtool-ltdl libtool-ltdl-devel mysql-connector-odbc mlocate libiodbc sqlite sqlite-devel sql-devel.i686 sqlite-doc.noarch sqlite-tcl.x86_64 patch libedit-devel jq wireshark
+wget https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-18-current.tar.gz
+tar xvzf asterisk-18-current.tar.gz 
+cd asterisk-18*/
+./configure --libdir=/usr/lib64 --with-jansson-bundled
+make menuselect.makeopts
+menuselect/menuselect \\\\
+        --disable BUILD_NATIVE \\\\
+        --disable chan_sip \\\\
+        --disable chan_skinny \\\\
+        --disable format_mp3 \\\\
+        --enable cdr_csv \\\\
+        --enable res_snmp \\\\
+        --enable res_http_websocket \\\\
+        menuselect.makeopts
+make 
+make install
+make basic-pbx
+touch /etc/redhat-release
+make config
+ldconfig
+
+",
+                "encoding": "plain",
+                "group": "root",
+                "mode": "000644",
+                "owner": "root",
+              },
+            },
+          },
+        },
+      },
+      "Properties": Object {
+        "AvailabilityZone": Object {
+          "Fn::Select": Array [
+            0,
+            Object {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "IamInstanceProfile": Object {
+          "Ref": "AsteriskInstanceInstanceProfile6D34C8D3",
+        },
+        "ImageId": Object {
+          "Ref": "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmarm64gp2C96584B6F00A464EAD1953AFF4B05118Parameter",
+        },
+        "InstanceType": "t4g.medium",
+        "SecurityGroupIds": Array [
+          Object {
+            "Fn::GetAtt": Array [
+              "VPCAsteriskSecurityGroupB0CC51CE",
+              "GroupId",
+            ],
+          },
+        ],
+        "SubnetId": Object {
+          "Ref": "VPCAsteriskPublicSubnet1SubnetFFC9C8E9",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "test/Asterisk/Instance",
+          },
+        ],
+        "UserData": Object {
+          "Fn::Base64": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "#!/bin/bash
+# fingerprint: e7078abdaa05cc29
+(
+  set +e
+  /opt/aws/bin/cfn-init -v --region ",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+                " --stack ",
+                Object {
+                  "Ref": "AWS::StackName",
+                },
+                " --resource AsteriskInstanceDB134462cc869413d7c8117a --url https://cloudformation.",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+                ".",
+                Object {
+                  "Ref": "AWS::URLSuffix",
+                },
+                " --role ",
+                Object {
+                  "Ref": "VPCasteriskEc2Role6311600C",
+                },
+                " -c default
+  /opt/aws/bin/cfn-signal -e $? --region ",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+                " --stack ",
+                Object {
+                  "Ref": "AWS::StackName",
+                },
+                " --resource AsteriskInstanceDB134462cc869413d7c8117a --url https://cloudformation.",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+                ".",
+                Object {
+                  "Ref": "AWS::URLSuffix",
+                },
+                " --role ",
+                Object {
+                  "Ref": "VPCasteriskEc2Role6311600C",
+                },
+                "
+  cat /var/log/cfn-init.log >&2
+)",
+              ],
+            ],
+          },
+        },
+      },
+      "Type": "AWS::EC2::Instance",
+    },
+    "AsteriskInstanceInstanceProfile6D34C8D3": Object {
+      "Properties": Object {
+        "Roles": Array [
+          Object {
+            "Ref": "VPCasteriskEc2Role6311600C",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::InstanceProfile",
+    },
+    "PSTNResources1DB9F314": Object {
+      "DependsOn": Array [
+        "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberpstnCustomResourceRoleADB2DE88",
+      ],
+      "Properties": Object {
+        "Architectures": Array [
+          "arm64",
+        ],
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "1425ab0d5d078176a933603b167ece8cda79fd584bbf7acc0c0fd705df3fac5d.zip",
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberpstnCustomResourceRoleADB2DE88",
+            "Arn",
+          ],
+        },
+        "Runtime": "python3.9",
+        "Timeout": 60,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "VPC61AD6880": Object {
+      "Properties": Object {
+        "CidrBlock": "10.0.0.0/16",
+        "EnableDnsHostnames": true,
+        "EnableDnsSupport": true,
+        "InstanceTenancy": "default",
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "test/VPC/VPC",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::VPC",
+    },
+    "VPCAsteriskPublicSubnet1DefaultRouteC59B9AA6": Object {
+      "DependsOn": Array [
+        "VPCVPCGW3AFA48F6",
+      ],
+      "Properties": Object {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": Object {
+          "Ref": "VPCIGWE1DD60CF",
+        },
+        "RouteTableId": Object {
+          "Ref": "VPCAsteriskPublicSubnet1RouteTable13479FC1",
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "VPCAsteriskPublicSubnet1RouteTable13479FC1": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "test/VPC/VPC/AsteriskPublicSubnet1",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "VPC61AD6880",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "VPCAsteriskPublicSubnet1RouteTableAssociation8CC7051C": Object {
+      "Properties": Object {
+        "RouteTableId": Object {
+          "Ref": "VPCAsteriskPublicSubnet1RouteTable13479FC1",
+        },
+        "SubnetId": Object {
+          "Ref": "VPCAsteriskPublicSubnet1SubnetFFC9C8E9",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "VPCAsteriskPublicSubnet1SubnetFFC9C8E9": Object {
+      "Properties": Object {
+        "AvailabilityZone": Object {
+          "Fn::Select": Array [
+            0,
+            Object {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.0.0/24",
+        "MapPublicIpOnLaunch": true,
+        "Tags": Array [
+          Object {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "AsteriskPublic",
+          },
+          Object {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "test/VPC/VPC/AsteriskPublicSubnet1",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "VPC61AD6880",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "VPCAsteriskPublicSubnet2DefaultRoute9A4E81AE": Object {
+      "DependsOn": Array [
+        "VPCVPCGW3AFA48F6",
+      ],
+      "Properties": Object {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": Object {
+          "Ref": "VPCIGWE1DD60CF",
+        },
+        "RouteTableId": Object {
+          "Ref": "VPCAsteriskPublicSubnet2RouteTableFD0947A3",
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "VPCAsteriskPublicSubnet2RouteTableAssociationFF84A649": Object {
+      "Properties": Object {
+        "RouteTableId": Object {
+          "Ref": "VPCAsteriskPublicSubnet2RouteTableFD0947A3",
+        },
+        "SubnetId": Object {
+          "Ref": "VPCAsteriskPublicSubnet2Subnet7DCF0F3D",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "VPCAsteriskPublicSubnet2RouteTableFD0947A3": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "test/VPC/VPC/AsteriskPublicSubnet2",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "VPC61AD6880",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "VPCAsteriskPublicSubnet2Subnet7DCF0F3D": Object {
+      "Properties": Object {
+        "AvailabilityZone": Object {
+          "Fn::Select": Array [
+            1,
+            Object {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.1.0/24",
+        "MapPublicIpOnLaunch": true,
+        "Tags": Array [
+          Object {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "AsteriskPublic",
+          },
+          Object {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "test/VPC/VPC/AsteriskPublicSubnet2",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "VPC61AD6880",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "VPCAsteriskSecurityGroupB0CC51CE": Object {
+      "Properties": Object {
+        "GroupDescription": "Security Group for Asterisk Instance",
+        "SecurityGroupEgress": Array [
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "SecurityGroupIngress": Array [
+          Object {
+            "CidrIp": "3.80.16.0/23",
+            "Description": "Allow Chime Voice Connector Signaling Access",
+            "FromPort": 5060,
+            "IpProtocol": "udp",
+            "ToPort": 5060,
+          },
+          Object {
+            "CidrIp": "3.80.16.0/23",
+            "Description": "Allow Chime Voice Connector Signaling Access",
+            "FromPort": 5060,
+            "IpProtocol": "tcp",
+            "ToPort": 5061,
+          },
+          Object {
+            "CidrIp": "99.77.253.0/24",
+            "Description": "Allow Chime Voice Connector Signaling Access",
+            "FromPort": 5060,
+            "IpProtocol": "udp",
+            "ToPort": 5060,
+          },
+          Object {
+            "CidrIp": "99.77.253.0/24",
+            "Description": "Allow Chime Voice Connector Signaling Access",
+            "FromPort": 5060,
+            "IpProtocol": "tcp",
+            "ToPort": 5061,
+          },
+          Object {
+            "CidrIp": "99.77.253.0/24",
+            "Description": "Allow Chime Voice Connector Signaling Access",
+            "FromPort": 5000,
+            "IpProtocol": "udp",
+            "ToPort": 65000,
+          },
+          Object {
+            "CidrIp": "3.80.16.0/23",
+            "Description": "Allow Chime Voice Connector Media Access",
+            "FromPort": 5000,
+            "IpProtocol": "udp",
+            "ToPort": 65000,
+          },
+          Object {
+            "CidrIp": "52.55.62.128/25",
+            "Description": "Allow Chime Voice Connector Media Access",
+            "FromPort": 1024,
+            "IpProtocol": "udp",
+            "ToPort": 65535,
+          },
+          Object {
+            "CidrIp": "52.55.63.0/25",
+            "Description": "Allow Chime Voice Connector Media Access",
+            "FromPort": 1024,
+            "IpProtocol": "udp",
+            "ToPort": 65535,
+          },
+          Object {
+            "CidrIp": "34.212.95.128/25",
+            "Description": "Allow Chime Voice Connector Media Access",
+            "FromPort": 1024,
+            "IpProtocol": "udp",
+            "ToPort": 65535,
+          },
+          Object {
+            "CidrIp": "34.223.21.0/25",
+            "Description": "Allow Chime Voice Connector Media Access",
+            "FromPort": 1024,
+            "IpProtocol": "udp",
+            "ToPort": 65535,
+          },
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow Websocket Access",
+            "FromPort": 8088,
+            "IpProtocol": "tcp",
+            "ToPort": 8088,
+          },
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "SSH Access",
+            "FromPort": 22,
+            "IpProtocol": "tcp",
+            "ToPort": 22,
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "VPC61AD6880",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "VPCIGWE1DD60CF": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "test/VPC/VPC",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::InternetGateway",
+    },
+    "VPCVPCGW3AFA48F6": Object {
+      "Properties": Object {
+        "InternetGatewayId": Object {
+          "Ref": "VPCIGWE1DD60CF",
+        },
+        "VpcId": Object {
+          "Ref": "VPC61AD6880",
+        },
+      },
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+    },
+    "VPCasteriskEc2Role6311600C": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "ec2.",
+                      Object {
+                        "Ref": "AWS::URLSuffix",
+                      },
+                    ],
+                  ],
+                },
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/AmazonSSMManagedInstanceCore",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "VPCasteriskEc2RoleDefaultPolicy170F5E41": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "cloudformation:DescribeStackResource",
+                "cloudformation:SignalResource",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "AWS::StackId",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "VPCasteriskEc2RoleDefaultPolicy170F5E41",
+        "Roles": Array [
+          Object {
+            "Ref": "VPCasteriskEc2Role6311600C",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "VPCasteriskEip406AFABB": Object {
+      "Type": "AWS::EC2::EIP",
+    },
+    "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestPSTNResourceProviderframeworkonEventED6695D2": Object {
+      "DependsOn": Array [
+        "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestPSTNResourceProviderframeworkonEventServiceRoleDefaultPolicy05211EE7",
+        "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestPSTNResourceProviderframeworkonEventServiceRole5008B784",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
+        },
+        "Description": "AWS CDK resource provider framework - onEvent (test/VoiceConnector/pstnVoiceConnector/voiceConnectorRequest/PSTNResourceProvider)",
+        "Environment": Object {
+          "Variables": Object {
+            "USER_ON_EVENT_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "PSTNResources1DB9F314",
+                "Arn",
+              ],
+            },
+          },
+        },
+        "Handler": "framework.onEvent",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestPSTNResourceProviderframeworkonEventServiceRole5008B784",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs12.x",
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestPSTNResourceProviderframeworkonEventServiceRole5008B784": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestPSTNResourceProviderframeworkonEventServiceRoleDefaultPolicy05211EE7": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "PSTNResources1DB9F314",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "PSTNResources1DB9F314",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestPSTNResourceProviderframeworkonEventServiceRoleDefaultPolicy05211EE7",
+        "Roles": Array [
+          Object {
+            "Ref": "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestPSTNResourceProviderframeworkonEventServiceRole5008B784",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestpstnCustomResource27AF2C83": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestPSTNResourceProviderframeworkonEventED6695D2",
+            "Arn",
+          ],
+        },
+        "properties": Object {
+          "encryption": false,
+          "name": "testVoiceConnectorpstnVoiceConnector668B4AE0",
+          "origination": Array [
+            Object {
+              "host": Object {
+                "Ref": "VPCasteriskEip406AFABB",
+              },
+              "port": 5060,
+              "priority": 1,
+              "protocol": "UDP",
+              "weight": 1,
+            },
+          ],
+          "region": Object {
+            "Ref": "AWS::Region",
+          },
+          "termination": Object {
+            "callingRegions": Array [
+              "US",
+            ],
+            "terminationCidrs": Array [
+              Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    Object {
+                      "Ref": "VPCasteriskEip406AFABB",
+                    },
+                    "/32",
+                  ],
+                ],
+              },
+            ],
+          },
+        },
+        "resourceType": "VoiceConnector",
+        "uid": "testVoiceConnectorpstnVoiceConnector668B4AE0",
+      },
+      "Type": "AWS::CloudFormation::CustomResource",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberPSTNResourceProviderframeworkonEvent942D8AB0": Object {
+      "DependsOn": Array [
+        "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberPSTNResourceProviderframeworkonEventServiceRoleDefaultPolicy7F02870F",
+        "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberPSTNResourceProviderframeworkonEventServiceRoleF87410C7",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
+        },
+        "Description": "AWS CDK resource provider framework - onEvent (test/VoiceConnector/voiceConnectorPhoneNumber/ChimePhoneNumber/PSTNResourceProvider)",
+        "Environment": Object {
+          "Variables": Object {
+            "USER_ON_EVENT_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "PSTNResources1DB9F314",
+                "Arn",
+              ],
+            },
+          },
+        },
+        "Handler": "framework.onEvent",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberPSTNResourceProviderframeworkonEventServiceRoleF87410C7",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs12.x",
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberPSTNResourceProviderframeworkonEventServiceRoleDefaultPolicy7F02870F": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "PSTNResources1DB9F314",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "PSTNResources1DB9F314",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberPSTNResourceProviderframeworkonEventServiceRoleDefaultPolicy7F02870F",
+        "Roles": Array [
+          Object {
+            "Ref": "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberPSTNResourceProviderframeworkonEventServiceRoleF87410C7",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberPSTNResourceProviderframeworkonEventServiceRoleF87410C7": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberpstnCustomResource78CB2D67": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberPSTNResourceProviderframeworkonEvent942D8AB0",
+            "Arn",
+          ],
+        },
+        "properties": Object {
+          "phoneCountry": "US",
+          "phoneNumberType": "Local",
+          "phoneProductType": "VoiceConnector",
+          "phoneState": "IL",
+        },
+        "resourceType": "PhoneNumber",
+        "uid": "testVoiceConnectorvoiceConnectorPhoneNumberD0E0D162",
+      },
+      "Type": "AWS::CloudFormation::CustomResource",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberpstnCustomResourceRoleADB2DE88": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Description": "Amazon Chime PSTN Resources",
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Policies": Array [
+          Object {
+            "PolicyDocument": Object {
+              "Statement": Array [
+                Object {
+                  "Action": Array [
+                    "chime:CreateSipRule",
+                    "chime:DeleteSipRule",
+                    "chime:UpdateSipRule",
+                    "chime:GetSipRule",
+                    "chime:CreateSipMediaApplication",
+                    "chime:DeleteSipMediaApplication",
+                    "chime:GetPhoneNumberOrder",
+                    "chime:SearchAvailablePhoneNumbers",
+                    "chime:CreatePhoneNumberOrder",
+                    "chime:DeletePhoneNumber",
+                    "chime:GetPhoneNumber",
+                    "chime:CreateVoiceConnector",
+                    "chime:PutVoiceConnectorStreamingConfiguration",
+                    "chime:PutVoiceConnectorTermination",
+                    "chime:PutVoiceConnectorOrigination",
+                    "chime:ListPhoneNumbers",
+                    "chime:AssociatePhoneNumbersWithVoiceConnector",
+                    "chime:DisassociatePhoneNumbersFromVoiceConnector",
+                    "chime:DeleteVoiceConnector",
+                    "lambda:GetPolicy",
+                    "lambda:AddPermission",
+                    "iam:PutRolePolicy",
+                    "iam:CreateServiceLinkedRole",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": "*",
+                },
+                Object {
+                  "Action": Array [
+                    "ssm:PutParameter",
+                    "ssm:GetParameter",
+                    "ssm:DeleteParameter",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        "arn:aws:ssm:",
+                        Object {
+                          "Ref": "AWS::Region",
+                        },
+                        ":",
+                        Object {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":parameter/chime/*",
+                      ],
+                    ],
+                  },
+                },
+              ],
+              "Version": "2012-10-17",
+            },
+            "PolicyName": "chimePolicy",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "VoiceConnectorvoiceConnectorPhoneNumberphoneAssociationC9EFBA64": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "VoiceConnectorvoiceConnectorPhoneNumberphoneAssociationCustomResourcePolicyB28D93E6",
+      ],
+      "Properties": Object {
+        "Create": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"service\\":\\"Chime\\",\\"action\\":\\"associatePhoneNumbersWithVoiceConnector\\",\\"region\\":\\"us-east-1\\",\\"parameters\\":{\\"E164PhoneNumbers\\":[\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberpstnCustomResource78CB2D67",
+                  "phoneNumber",
+                ],
+              },
+              "\\"],\\"VoiceConnectorId\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestpstnCustomResource27AF2C83",
+                  "voiceConnectorId",
+                ],
+              },
+              "\\",\\"ForceAssociate\\":true},\\"physicalResourceId\\":{\\"id\\":\\"testVoiceConnectorvoiceConnectorPhoneNumberphoneAssociation9BD740B3\\"}}",
+            ],
+          ],
+        },
+        "Delete": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"service\\":\\"Chime\\",\\"action\\":\\"disassociatePhoneNumbersFromVoiceConnector\\",\\"region\\":\\"us-east-1\\",\\"parameters\\":{\\"E164PhoneNumbers\\":[\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberpstnCustomResource78CB2D67",
+                  "phoneNumber",
+                ],
+              },
+              "\\"],\\"VoiceConnectorId\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestpstnCustomResource27AF2C83",
+                  "voiceConnectorId",
+                ],
+              },
+              "\\"},\\"physicalResourceId\\":{\\"id\\":\\"testVoiceConnectorvoiceConnectorPhoneNumberphoneAssociation9BD740B3\\"}}",
+            ],
+          ],
+        },
+        "InstallLatestAwsSdk": true,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "AWS679f53fac002430cb0da5b7982bd22872D164C4C",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::AWS",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "VoiceConnectorvoiceConnectorPhoneNumberphoneAssociationCustomResourcePolicyB28D93E6": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "chime:AssociatePhoneNumbersWithVoiceConnector",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": "chime:DisassociatePhoneNumbersFromVoiceConnector",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "VoiceConnectorvoiceConnectorPhoneNumberphoneAssociationCustomResourcePolicyB28D93E6",
+        "Roles": Array [
+          Object {
+            "Ref": "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+  },
+  "Rules": Object {
+    "CheckBootstrapVersion": Object {
+      "Assertions": Array [
+        Object {
+          "Assert": Object {
+            "Fn::Not": Array [
+              Object {
+                "Fn::Contains": Array [
+                  Array [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  Object {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
