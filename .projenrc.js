@@ -32,7 +32,7 @@ const common_exclude = [
   '.DS_Store',
   '.yalc',
 ];
-
+project.package.addDevDeps('ts-node@^10');
 project.addTask('launch', {
   exec: 'yarn && yarn projen && yarn build && yarn cdk bootstrap && yarn cdk deploy -O site/src/cdk-outputs.json',
 });
