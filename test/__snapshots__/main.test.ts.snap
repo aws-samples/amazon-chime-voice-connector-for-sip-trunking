@@ -29,17 +29,9 @@ Object {
     },
     "VoiceConnectorId": Object {
       "Value": Object {
-        "Fn::Join": Array [
-          "",
-          Array [
-            "VOICECONNECTORID=",
-            Object {
-              "Fn::GetAtt": Array [
-                "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestpstnCustomResource27AF2C83",
-                "voiceConnectorId",
-              ],
-            },
-          ],
+        "Fn::GetAtt": Array [
+          "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestpstnCustomResource27AF2C83",
+          "voiceConnectorId",
         ],
       },
     },

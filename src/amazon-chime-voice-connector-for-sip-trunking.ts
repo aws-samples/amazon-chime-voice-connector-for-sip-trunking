@@ -41,7 +41,7 @@ export class VoiceConnectorForSIPTrunking extends Stack {
     });
 
     new CfnOutput(this, 'VoiceConnectorId', {
-      value: 'VOICECONNECTORID=' + voiceConnector.pstnVoiceConnectorId,
+      value: voiceConnector.pstnVoiceConnectorId,
     });
   }
 }
