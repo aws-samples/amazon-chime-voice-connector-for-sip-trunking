@@ -23,7 +23,7 @@ In this deployment, an example output from this command `aws chime get-voice-con
 ```
 {
     "Termination": {
-        "CpsLimit": 0,
+        "CpsLimit": 1,
         "CallingRegions": [
             "US"
         ],
