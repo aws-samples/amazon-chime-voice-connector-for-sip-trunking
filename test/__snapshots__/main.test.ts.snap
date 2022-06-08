@@ -698,7 +698,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "1425ab0d5d078176a933603b167ece8cda79fd584bbf7acc0c0fd705df3fac5d.zip",
+          "S3Key": "873b9c10faaaf464834893db1c6a18dbfe4c43b51eaa3fde21b66bca788356e5.zip",
         },
         "Handler": "index.handler",
         "Role": Object {
