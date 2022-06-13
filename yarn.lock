@@ -1389,10 +1389,10 @@ case@1.6.3, case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk-amazon-chime-resources@^0.1.24:
-  version "0.1.24"
-  resolved "https://registry.yarnpkg.com/cdk-amazon-chime-resources/-/cdk-amazon-chime-resources-0.1.24.tgz#5a5c2b79d4b1c7c85c13908d3fb300f60cb17131"
-  integrity sha512-lfr3JW3e61DcAagmHcvFXbCQBg7qvbHsgAnJeomxPS3EkyI64d4BWvuJikMo0Bl/MyeHZ/R9lb00TqFJlYXmnA==
+cdk-amazon-chime-resources@^0.1.25:
+  version "0.1.26"
+  resolved "https://registry.yarnpkg.com/cdk-amazon-chime-resources/-/cdk-amazon-chime-resources-0.1.26.tgz#2d3cee68dc7a12366bfa47b63e3b330b3e43bd7b"
+  integrity sha512-Pkg5rKq6sF000KRs2HbsHtpCVveLoUgK3lTXkO7mvtbpHlNr7eLU0Ecfmv1t2VbsfvPdXtIvAN2sZawa91Tu3w==
 
 chalk@^2.0.0:
   version "2.4.2"
@@ -1553,9 +1553,9 @@ console-control-strings@^1.1.0:
   integrity sha512-ty/fTekppD2fIwRvnZAVdeOiGd1c7YXEixbgJTNzqcxJWKQnjJ/V1bNEEE6hygpM3WjwHFUVK6HTjWSzV4a8sQ==
 
 constructs@^10.0.5:
-  version "10.1.36"
-  resolved "https://registry.yarnpkg.com/constructs/-/constructs-10.1.36.tgz#33aca274b44ffe3d6e3537498e1b11635cf3a104"
-  integrity sha512-6yJOPlPJ5/LHWyFJ7h/26CAiDhblqaOGOSsSqvZR6jzjc1RWY+J6I7I/vzyM1iTrP7ZlWWHuC5NBEwQOp3X87w==
+  version "10.1.37"
+  resolved "https://registry.yarnpkg.com/constructs/-/constructs-10.1.37.tgz#2200e542d86a40dafb0766b940d9ce1f5cd36e79"
+  integrity sha512-MieKDdWuzBhXCF5u8ors90K/u1HH56VykWRLZnaHFG1pJ05aqpOgXDT7oxhNDu2uvHmQpliCnFL1KAXIRfX+Gg==
 
 conventional-changelog-config-spec@^2.1.0:
   version "2.1.0"
@@ -4322,10 +4322,10 @@ progress@^2.0.3:
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
   integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
 
-projen@^0.58.5:
-  version "0.58.5"
-  resolved "https://registry.yarnpkg.com/projen/-/projen-0.58.5.tgz#82e6bb34c43ceb38e90c8b6fcc4fe1ffa79d9d85"
-  integrity sha512-ygtv1LR/ht4Jph0u9MDKssQXiNV7TxqfuPaRAZy+ED7wNrD5KLVuDFHqS4C7m4o2rkBRYow7tBaCt9Q2+lbOmA==
+projen@^0.58.6:
+  version "0.58.6"
+  resolved "https://registry.yarnpkg.com/projen/-/projen-0.58.6.tgz#3b9824b3f48cc82ea88ed3a52ae5317b51adbcf0"
+  integrity sha512-cBeAl1CUraT0hCWKYOqlO2M7SSSzmXYJct99Bmw2yn7dZFcxDXwkmPYwLRkCEgP5zIvayWvfvllCRadlgMgQ9g==
   dependencies:
     "@iarna/toml" "^2.2.5"
     case "^1.6.3"
@@ -5271,7 +5271,7 @@ wrap-ansi@^7.0.0:
 wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
-  integrity sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
+  integrity sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==
 
 write-file-atomic@^3.0.0:
   version "3.0.3"
@@ -5301,7 +5301,7 @@ xml-name-validator@^3.0.0:
 xml@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/xml/-/xml-1.0.1.tgz#78ba72020029c5bc87b8a81a3cfcd74b4a2fc1e5"
-  integrity sha1-eLpyAgApxbyHuKgaPPzXS0ovweU=
+  integrity sha512-huCv9IH9Tcf95zuYCsQraZtWnJvBtLVE0QHMOs8bWyZAFZNDcYjsPq1nEx8jKA9y+Beo9v+7OBPRisQTjinQMw==
 
 xmlbuilder2@^2.4.1:
   version "2.4.1"
