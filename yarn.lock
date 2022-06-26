@@ -1348,10 +1348,10 @@ case@1.6.3, case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk-amazon-chime-resources@^0.1.36:
-  version "0.1.36"
-  resolved "https://registry.yarnpkg.com/cdk-amazon-chime-resources/-/cdk-amazon-chime-resources-0.1.36.tgz#37f7a3fe657e6a444b8848f21d9dd5266a472557"
-  integrity sha512-ZAewNIP2wDmd7YWPJHH1ypWKXoqbVGPr6mrRWy3n28Reeks8oxLmw3RhQazqsXeT3Dhev8MjMwZelbe24f0nbg==
+cdk-amazon-chime-resources@^0.1.38:
+  version "0.1.38"
+  resolved "https://registry.yarnpkg.com/cdk-amazon-chime-resources/-/cdk-amazon-chime-resources-0.1.38.tgz#07d8550e95213646a8aa8c7afae152d5c30ced91"
+  integrity sha512-32qcXIpZujhubvkClccq/ajt91IWOUtIYA0Q7bdnwki5DUYKkhcozRGzjDoQtyeWQT9TYUYLiBaD2x9lhB7R5g==
 
 chalk@^2.0.0:
   version "2.4.2"
@@ -3957,9 +3957,9 @@ npmlog@^6.0.0:
     set-blocking "^2.0.0"
 
 nwsapi@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.2.0.tgz#204879a9e3d068ff2a55139c2c772780681a38b7"
-  integrity sha512-h2AatdwYH+JHiZpv7pt/gSX1XoRGb7L/qSIeuqA6GwYoF9w1vP1cw42TO0aI2pNyshRK5893hNSl+1//vHK7hQ==
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.2.1.tgz#10a9f268fbf4c461249ebcfe38e359aa36e2577c"
+  integrity sha512-JYOWTeFoS0Z93587vRJgASD5Ut11fYl5NyihP3KrYBvMe1FRRs6RN7m20SA/16GM4P6hTnZjT+UmDOt38UeXNg==
 
 object-inspect@^1.12.0, object-inspect@^1.9.0:
   version "1.12.2"
