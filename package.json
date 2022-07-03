@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "aws-cdk-lib": "^2.23.0",
-    "cdk-amazon-chime-resources": "^0.1.42",
+    "cdk-amazon-chime-resources": "^0.1.44",
     "constructs": "^10.0.5"
   },
   "license": "MIT-0",
