@@ -21,6 +21,7 @@ const project = new awscdk.AwsCdkTypeScriptApp({
   defaultReleaseBranch: 'main',
   name: 'amazon-chime-voice-connector-for-sip-trunking',
   eslintOptions: { ignorePatterns: ['resources/**'] },
+  devDeps: ['@types/prettier@2.6.0', 'esbuild', 'got@11.8.5', 'ts-node@^10'],
   deps: ['cdk-amazon-chime-resources'],
 });
 
@@ -32,7 +33,6 @@ const common_exclude = [
   '.DS_Store',
   '.yalc',
 ];
-project.package.addDevDeps('ts-node@^10');
 project.addTask('launch', {
   exec: 'yarn && yarn projen && yarn build && yarn cdk bootstrap && yarn cdk deploy -O site/src/cdk-outputs.json',
 });

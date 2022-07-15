@@ -28,6 +28,7 @@
   "devDependencies": {
     "@types/jest": "^27.5.2",
     "@types/node": "^14",
+    "@types/prettier": "2.6.0",
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
     "aws-cdk": "^2.23.0",
@@ -36,6 +37,7 @@
     "eslint-import-resolver-node": "^0.3.6",
     "eslint-import-resolver-typescript": "^2.7.1",
     "eslint-plugin-import": "^2.26.0",
+    "got": "11.8.5",
     "jest": "^27",
     "jest-junit": "^13",
     "json-schema": "^0.4.0",

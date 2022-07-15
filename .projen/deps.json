@@ -10,6 +10,11 @@
       "type": "build"
     },
     {
+      "name": "@types/prettier",
+      "version": "2.6.0",
+      "type": "build"
+    },
+    {
       "name": "@typescript-eslint/eslint-plugin",
       "version": "^5",
       "type": "build"
@@ -46,6 +51,11 @@
       "type": "build"
     },
     {
+      "name": "got",
+      "version": "11.8.5",
+      "type": "build"
+    },
+    {
       "name": "jest",
       "type": "build"
     },
@@ -73,7 +83,6 @@
     },
     {
       "name": "ts-node",
-      "version": "^10",
       "type": "build"
     },
     {
