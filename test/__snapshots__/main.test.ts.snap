@@ -1075,7 +1075,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "23e8dd0cd843d112224968307ac764ce3fc2f2ddea65eb8c8c8feb8f48e660d3.zip",
+          "S3Key": "e7c95e1a12d903d913ebdd526c735f1ac58b2024882a5562110221fe685ebe85.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (test/VoiceConnector/pstnVoiceConnector/voiceConnectorRequest/PSTNResourceProvider)",
         "Environment": Object {
@@ -1234,7 +1234,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "23e8dd0cd843d112224968307ac764ce3fc2f2ddea65eb8c8c8feb8f48e660d3.zip",
+          "S3Key": "e7c95e1a12d903d913ebdd526c735f1ac58b2024882a5562110221fe685ebe85.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (test/VoiceConnector/voiceConnectorPhoneNumber/ChimePhoneNumber/PSTNResourceProvider)",
         "Environment": Object {
