@@ -1503,10 +1503,10 @@ case@1.6.3, case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk-amazon-chime-resources@^0.1.130:
-  version "0.1.130"
-  resolved "https://registry.yarnpkg.com/cdk-amazon-chime-resources/-/cdk-amazon-chime-resources-0.1.130.tgz#6950e1261e39680f505db6cf437a52b28f281023"
-  integrity sha512-2xPK2YR64XD9Jxg6zgt7aovDNccbSTs+DS5mXzHmNMUNLsQET8Nnke3kLA86oCQ+TfWVKdc3S8Oj/RNk9x+BAQ==
+cdk-amazon-chime-resources@^0.1.131:
+  version "0.1.131"
+  resolved "https://registry.yarnpkg.com/cdk-amazon-chime-resources/-/cdk-amazon-chime-resources-0.1.131.tgz#85a540b2304398e84c787cde18a2acf035f9131f"
+  integrity sha512-2ZX+7Wsd7otd8Jg32IMSlRYUJKnIZLVxuAA8/qLYeiq49joNVktWfFy8z6HZxVMh5M2yqT9RkdZyAJz3JXZ+NQ==
 
 chalk@^2.0.0:
   version "2.4.2"
@@ -1669,9 +1669,9 @@ console-control-strings@^1.1.0:
   integrity sha512-ty/fTekppD2fIwRvnZAVdeOiGd1c7YXEixbgJTNzqcxJWKQnjJ/V1bNEEE6hygpM3WjwHFUVK6HTjWSzV4a8sQ==
 
 constructs@^10.0.5:
-  version "10.1.149"
-  resolved "https://registry.yarnpkg.com/constructs/-/constructs-10.1.149.tgz#9b89d8f7b9e1dc86bed25e491c22065500271ec6"
-  integrity sha512-0YG2CbiMt2O/B4QFNMXthjN2E2mmdDpE4ROx9v2RX8uxG3HktoF+cZqqwCkJKPaCzHPS/MyDVPW1LLsmwbYvAw==
+  version "10.1.150"
+  resolved "https://registry.yarnpkg.com/constructs/-/constructs-10.1.150.tgz#bd2caa140d4d328a840e3a3958ecad145aed2009"
+  integrity sha512-VJB9zsM3pAx0QUIOggWpbLPdJtNhmqshBLpmWLPe/qQcWIAMaHKidzaVNwaqQ7yp37IMRKZUUwapQH58z6ZFFA==
 
 conventional-changelog-config-spec@^2.1.0:
   version "2.1.0"
