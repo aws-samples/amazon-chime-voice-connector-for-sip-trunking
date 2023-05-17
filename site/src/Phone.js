@@ -7,14 +7,8 @@ import Container from 'aws-northstar/layouts/Container';
 import 'react-sip-phone/dist/index.css';
 import Form from 'aws-northstar/components/Form';
 import Button from 'aws-northstar/components/Button';
-import Checkbox from 'aws-northstar/components/Checkbox';
 import FormField from 'aws-northstar/components/FormField';
-import FormGroup from 'aws-northstar/components/FormGroup';
-import FormSection from 'aws-northstar/components/FormSection';
 import Input from 'aws-northstar/components/Input';
-import Select from 'aws-northstar/components/Select';
-import Textarea from 'aws-northstar/components/Textarea';
-import Toggle from 'aws-northstar/components/Toggle';
 
 const sipuri = configData.sipuri;
 const password = configData.password;

@@ -11,11 +11,13 @@ sed -i "s/INSTANCE_ID/$INSTANCE_ID/g" /etc/asterisk/pjsip.conf
 sed -i "s/PSTN_VOICE_CONNECTOR/$PSTN_VOICE_CONNECTOR/g" /etc/asterisk/pjsip.conf
 sed -i "s/PSTN_VOICE_CONNECTOR_PHONE/$PSTN_VOICE_CONNECTOR_PHONE/g" /etc/asterisk/extensions.conf
 
-groupadd asterisk
-useradd -r -d /var/lib/asterisk -g asterisk asterisk
 usermod -aG audio,dialout asterisk
 chown -R asterisk.asterisk /etc/asterisk
 chown -R asterisk.asterisk /var/{lib,log,spool}/asterisk
 
-systemctl start asterisk
+echo '0 * * * * /sbin/asterisk -rx "core reload"' > /etc/asterisk/crontab.txt 
+crontab /etc/asterisk/crontab.txt
+
+systemctl restart asterisk
+/sbin/asterisk -rx "core reload"
 

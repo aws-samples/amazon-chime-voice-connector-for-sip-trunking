@@ -34,7 +34,8 @@
     }
   },
   "ignorePatterns": [
-    "resources/**"
+    "resources/**",
+    "!.projenrc.js"
   ],
   "rules": {
     "indent": [

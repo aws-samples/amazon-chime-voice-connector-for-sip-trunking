@@ -2,6 +2,116 @@
 
 exports[`Snapshot 1`] = `
 Object {
+  "Mappings": Object {
+    "AsteriskInstanceAmiMapD5119D2F": Object {
+      "us-east-1": Object {
+        "ami": Object {
+          "Ref": "SsmParameterValueawsservicecanonicalubuntuserverjammystablecurrentarm64hvmebsgp2amiidC96584B6F00A464EAD1953AFF4B05118Parameter",
+        },
+      },
+    },
+    "DefaultCrNodeVersionMap": Object {
+      "af-south-1": Object {
+        "value": "nodejs16.x",
+      },
+      "ap-east-1": Object {
+        "value": "nodejs16.x",
+      },
+      "ap-northeast-1": Object {
+        "value": "nodejs16.x",
+      },
+      "ap-northeast-2": Object {
+        "value": "nodejs16.x",
+      },
+      "ap-northeast-3": Object {
+        "value": "nodejs16.x",
+      },
+      "ap-south-1": Object {
+        "value": "nodejs16.x",
+      },
+      "ap-south-2": Object {
+        "value": "nodejs16.x",
+      },
+      "ap-southeast-1": Object {
+        "value": "nodejs16.x",
+      },
+      "ap-southeast-2": Object {
+        "value": "nodejs16.x",
+      },
+      "ap-southeast-3": Object {
+        "value": "nodejs16.x",
+      },
+      "ca-central-1": Object {
+        "value": "nodejs16.x",
+      },
+      "cn-north-1": Object {
+        "value": "nodejs16.x",
+      },
+      "cn-northwest-1": Object {
+        "value": "nodejs16.x",
+      },
+      "eu-central-1": Object {
+        "value": "nodejs16.x",
+      },
+      "eu-central-2": Object {
+        "value": "nodejs16.x",
+      },
+      "eu-north-1": Object {
+        "value": "nodejs16.x",
+      },
+      "eu-south-1": Object {
+        "value": "nodejs16.x",
+      },
+      "eu-south-2": Object {
+        "value": "nodejs16.x",
+      },
+      "eu-west-1": Object {
+        "value": "nodejs16.x",
+      },
+      "eu-west-2": Object {
+        "value": "nodejs16.x",
+      },
+      "eu-west-3": Object {
+        "value": "nodejs16.x",
+      },
+      "me-central-1": Object {
+        "value": "nodejs16.x",
+      },
+      "me-south-1": Object {
+        "value": "nodejs16.x",
+      },
+      "sa-east-1": Object {
+        "value": "nodejs16.x",
+      },
+      "us-east-1": Object {
+        "value": "nodejs16.x",
+      },
+      "us-east-2": Object {
+        "value": "nodejs16.x",
+      },
+      "us-gov-east-1": Object {
+        "value": "nodejs16.x",
+      },
+      "us-gov-west-1": Object {
+        "value": "nodejs16.x",
+      },
+      "us-iso-east-1": Object {
+        "value": "nodejs14.x",
+      },
+      "us-iso-west-1": Object {
+        "value": "nodejs14.x",
+      },
+      "us-isob-east-1": Object {
+        "value": "nodejs14.x",
+      },
+      "us-west-1": Object {
+        "value": "nodejs16.x",
+      },
+      "us-west-2": Object {
+        "value": "nodejs16.x",
+      },
+    },
+  },
   "Outputs": Object {
     "PSTNVoiceConnectorARN": Object {
       "Value": Object {
@@ -37,7 +147,7 @@ Object {
     },
     "password": Object {
       "Value": Object {
-        "Ref": "AsteriskInstanceDB134462cc869413d7c8117a",
+        "Ref": "AsteriskInstanceDB13446264b3b894b7bbb35b",
       },
     },
     "sipuri": Object {
@@ -60,7 +170,7 @@ Object {
           Array [
             "aws ssm start-session --target ",
             Object {
-              "Ref": "AsteriskInstanceDB134462cc869413d7c8117a",
+              "Ref": "AsteriskInstanceDB13446264b3b894b7bbb35b",
             },
           ],
         ],
@@ -95,9 +205,9 @@ Object {
       "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
       "Type": "AWS::SSM::Parameter::Value<String>",
     },
-    "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmarm64gp2C96584B6F00A464EAD1953AFF4B05118Parameter": Object {
-      "Default": "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-arm64-gp2",
-      "Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
+    "SsmParameterValueawsservicecanonicalubuntuserverjammystablecurrentarm64hvmebsgp2amiidC96584B6F00A464EAD1953AFF4B05118Parameter": Object {
+      "Default": "/aws/service/canonical/ubuntu/server/jammy/stable/current/arm64/hvm/ebs-gp2/ami-id",
+      "Type": "AWS::SSM::Parameter::Value<String>",
     },
   },
   "Resources": Object {
@@ -110,7 +220,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "400f664767ec04a0966c8d688fa643ee8f6d0c94c8d91a71d3af814cc9b9e6ab.zip",
+          "S3Key": "bb459fac5f6b4b052aac9803443226d161a5cfe96f4648b21f9e4912c698bf30.zip",
         },
         "Handler": "index.handler",
         "Role": Object {
@@ -119,7 +229,15 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": Object {
+          "Fn::FindInMap": Array [
+            "DefaultCrNodeVersionMap",
+            Object {
+              "Ref": "AWS::Region",
+            },
+            "value",
+          ],
+        },
         "Timeout": 120,
       },
       "Type": "AWS::Lambda::Function",
@@ -161,16 +279,16 @@ Object {
           "Ref": "VPCasteriskEip406AFABB",
         },
         "InstanceId": Object {
-          "Ref": "AsteriskInstanceDB134462cc869413d7c8117a",
+          "Ref": "AsteriskInstanceDB13446264b3b894b7bbb35b",
         },
       },
       "Type": "AWS::EC2::EIPAssociation",
     },
-    "AsteriskInstanceDB134462cc869413d7c8117a": Object {
+    "AsteriskInstanceDB13446264b3b894b7bbb35b": Object {
       "CreationPolicy": Object {
         "ResourceSignal": Object {
           "Count": 1,
-          "Timeout": "PT20M",
+          "Timeout": "PT5M",
         },
       },
       "DependsOn": Array [
@@ -205,18 +323,8 @@ static=yes
 writeprotect=no
 clearglobalvars=no
 
-[catch_all]
-exten => _[+0-9].,1,Answer()
-exten => _[+0-9].,n,Wait(1)
-exten => _[+0-9].,n,Playback(hello-world)
-exten => _[+0-9].,n,Wait(1)
-exten => _[+0-9].,n,echo()
-exten => _[+0-9].,n,Wait(1)
-exten => _[+0-9].,n,Hangup()
-
 [from-voiceConnector]
 include => inbound_phone
-include => catch_all
 
 [from-phone]
 include => outbound_phone
@@ -228,8 +336,19 @@ same => n,Dial(PJSIP/\\\\\${EXTEN}@PSTNVoiceConnector,20)
 same => n,Congestion
 
 [inbound_phone]
-exten => _[+0-9].,1,NoOP(Inbound Call to Client)
+exten => _+X.,1,NoOP(Inbound Call)
+same => n,Answer()
+same => n,Wait(1)
+
+same => n,Verbose(Get device status \${DEVICE_STATE(PJSIP/agent)})
+same => n,GotoIf($[\${DEVICE_STATE(PJSIP/agent)}=UNAVAILABLE]?echoAudio:callAgent)
+
+same => n(callAgent),NoOp(CallAgent)
 same => n,Dial(PJSIP/agent)
+same => n,Hangup()
+
+same => n(echoAudio),NoOp(EchoAudio)
+same => n,Echo()
 same => n,Hangup()",
                 "encoding": "plain",
                 "group": "root",
@@ -461,55 +580,6 @@ stunaddr=stun.kinesisvideo.us-east-1.amazonaws.com:443",
                 "mode": "000644",
                 "owner": "root",
               },
-              "/etc/config_asterisk.sh": Object {
-                "content": "#!/bin/bash -xe
-IP=$( jq -r '.IP' /etc/config.json )
-PSTN_VOICE_CONNECTOR=$( jq -r '.PSTNVoiceConnector' /etc/config.json )
-PSTN_VOICE_CONNECTOR_PHONE=$( jq -r '.PSTNVoiceConnectorPhone' /etc/config.json )
-TOKEN=\`curl -X PUT \\"http://169.254.169.254/latest/api/token\\" -H \\"X-aws-ec2-metadata-token-ttl-seconds: 21600\\"\`
-LOCAL_HOSTNAME=$( curl -H \\"X-aws-ec2-metadata-token: $TOKEN\\" -v http://169.254.169.254/latest/meta-data/public-hostname )
-INSTANCE_ID=$( curl -H \\"X-aws-ec2-metadata-token: $TOKEN\\" -v http://169.254.169.254/latest/meta-data/instance-id )
-
-sed -i \\"s/IP_ADDRESS/$IP/g\\" /etc/asterisk/pjsip.conf
-sed -i \\"s/INSTANCE_ID/$INSTANCE_ID/g\\" /etc/asterisk/pjsip.conf
-sed -i \\"s/PSTN_VOICE_CONNECTOR/$PSTN_VOICE_CONNECTOR/g\\" /etc/asterisk/pjsip.conf
-sed -i \\"s/PSTN_VOICE_CONNECTOR_PHONE/$PSTN_VOICE_CONNECTOR_PHONE/g\\" /etc/asterisk/extensions.conf
-
-groupadd asterisk
-useradd -r -d /var/lib/asterisk -g asterisk asterisk
-usermod -aG audio,dialout asterisk
-chown -R asterisk.asterisk /etc/asterisk
-chown -R asterisk.asterisk /var/{lib,log,spool}/asterisk
-
-systemctl start asterisk
-
-",
-                "encoding": "plain",
-                "group": "root",
-                "mode": "000644",
-                "owner": "root",
-              },
-            },
-          },
-          "configSets": Object {
-            "default": Array [
-              "install",
-              "config",
-            ],
-          },
-          "install": Object {
-            "commands": Object {
-              "000": Object {
-                "command": "chmod +x /etc/install.sh",
-              },
-              "001": Object {
-                "command": "cd /tmp",
-              },
-              "002": Object {
-                "command": "/etc/install.sh 2>&1 | tee /var/log/asterisk_install.log",
-              },
-            },
-            "files": Object {
               "/etc/config.json": Object {
                 "content": Object {
                   "IP": Object {
@@ -543,35 +613,29 @@ systemctl start asterisk
                 "mode": "000644",
                 "owner": "root",
               },
-              "/etc/install.sh": Object {
+              "/etc/config_asterisk.sh": Object {
                 "content": "#!/bin/bash -xe
-## Copyright Amazon.com Inc. or its affiliates.
-HOMEDIR=/home/ec2-user
-cd /tmp
-yum update -y
-yum install net-tools -y
-yum install wget -y
-yum -y install make gcc gcc-c++ make subversion libxml2-devel ncurses-devel openssl-devel vim-enhanced man glibc-devel autoconf libnewt kernel-devel kernel-headers linux-headers openssl-devel zlib-devel libsrtp libsrtp-devel uuid libuuid-devel mariadb-server jansson-devel libsqlite3x libsqlite3x-devel epel-release.noarch bash-completion bash-completion-extras unixODBC unixODBC-devel libtool-ltdl libtool-ltdl-devel mysql-connector-odbc mlocate libiodbc sqlite sqlite-devel sql-devel.i686 sqlite-doc.noarch sqlite-tcl.x86_64 patch libedit-devel jq wireshark
-wget https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-18-current.tar.gz
-tar xvzf asterisk-18-current.tar.gz 
-cd asterisk-18*/
-./configure --libdir=/usr/lib64 --with-jansson-bundled
-make menuselect.makeopts
-menuselect/menuselect \\\\
-        --disable BUILD_NATIVE \\\\
-        --disable chan_sip \\\\
-        --disable chan_skinny \\\\
-        --disable format_mp3 \\\\
-        --enable cdr_csv \\\\
-        --enable res_snmp \\\\
-        --enable res_http_websocket \\\\
-        menuselect.makeopts
-make 
-make install
-make basic-pbx
-touch /etc/redhat-release
-make config
-ldconfig
+IP=$( jq -r '.IP' /etc/config.json )
+PSTN_VOICE_CONNECTOR=$( jq -r '.PSTNVoiceConnector' /etc/config.json )
+PSTN_VOICE_CONNECTOR_PHONE=$( jq -r '.PSTNVoiceConnectorPhone' /etc/config.json )
+TOKEN=\`curl -X PUT \\"http://169.254.169.254/latest/api/token\\" -H \\"X-aws-ec2-metadata-token-ttl-seconds: 21600\\"\`
+LOCAL_HOSTNAME=$( curl -H \\"X-aws-ec2-metadata-token: $TOKEN\\" -v http://169.254.169.254/latest/meta-data/public-hostname )
+INSTANCE_ID=$( curl -H \\"X-aws-ec2-metadata-token: $TOKEN\\" -v http://169.254.169.254/latest/meta-data/instance-id )
+
+sed -i \\"s/IP_ADDRESS/$IP/g\\" /etc/asterisk/pjsip.conf
+sed -i \\"s/INSTANCE_ID/$INSTANCE_ID/g\\" /etc/asterisk/pjsip.conf
+sed -i \\"s/PSTN_VOICE_CONNECTOR/$PSTN_VOICE_CONNECTOR/g\\" /etc/asterisk/pjsip.conf
+sed -i \\"s/PSTN_VOICE_CONNECTOR_PHONE/$PSTN_VOICE_CONNECTOR_PHONE/g\\" /etc/asterisk/extensions.conf
+
+usermod -aG audio,dialout asterisk
+chown -R asterisk.asterisk /etc/asterisk
+chown -R asterisk.asterisk /var/{lib,log,spool}/asterisk
+
+echo '0 * * * * /sbin/asterisk -rx \\"core reload\\"' > /etc/asterisk/crontab.txt 
+crontab /etc/asterisk/crontab.txt
+
+systemctl restart asterisk
+/sbin/asterisk -rx \\"core reload\\"
 
 ",
                 "encoding": "plain",
@@ -580,6 +644,11 @@ ldconfig
                 "owner": "root",
               },
             },
+          },
+          "configSets": Object {
+            "default": Array [
+              "config",
+            ],
           },
         },
       },
@@ -596,7 +665,13 @@ ldconfig
           "Ref": "AsteriskInstanceInstanceProfile6D34C8D3",
         },
         "ImageId": Object {
-          "Ref": "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmarm64gp2C96584B6F00A464EAD1953AFF4B05118Parameter",
+          "Fn::FindInMap": Array [
+            "AsteriskInstanceAmiMapD5119D2F",
+            Object {
+              "Ref": "AWS::Region",
+            },
+            "ami",
+          ],
         },
         "InstanceType": "t4g.medium",
         "SecurityGroupIds": Array [
@@ -622,7 +697,17 @@ ldconfig
               "",
               Array [
                 "#!/bin/bash
-# fingerprint: e7078abdaa05cc29
+apt-get update
+while fuser /var/lib/dpkg/lock >/dev/null 2>&1 ; do sleep 1 ; done
+mkdir -p /opt/aws/bin
+apt-get install -y python3-pip unzip jq asterisk
+pip3 install https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-py3-latest.tar.gz
+ln -s /root/aws-cfn-bootstrap-latest/init/ubuntu/cfn-hup /etc/init.d/cfn-hup
+ln -s /usr/local/bin/cfn-* /opt/aws/bin/
+curl \\"https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip\\" -o \\"awscliv2.zip\\"
+unzip -q awscliv2.zip
+./aws/install
+# fingerprint: 1c8e48a0bbca13a8
 (
   set +e
   /opt/aws/bin/cfn-init -v --region ",
@@ -633,7 +718,7 @@ ldconfig
                 Object {
                   "Ref": "AWS::StackName",
                 },
-                " --resource AsteriskInstanceDB134462cc869413d7c8117a --url https://cloudformation.",
+                " --resource AsteriskInstanceDB13446264b3b894b7bbb35b --url https://cloudformation.",
                 Object {
                   "Ref": "AWS::Region",
                 },
@@ -654,7 +739,7 @@ ldconfig
                 Object {
                   "Ref": "AWS::StackName",
                 },
-                " --resource AsteriskInstanceDB134462cc869413d7c8117a --url https://cloudformation.",
+                " --resource AsteriskInstanceDB13446264b3b894b7bbb35b --url https://cloudformation.",
                 Object {
                   "Ref": "AWS::Region",
                 },
@@ -1065,7 +1150,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "53c95d71cfd280747d971a38505aea07f812fdba75874a090358a2fc4f58f79b.zip",
+          "S3Key": "8e3d635893ea17fa3158623489cd42c680fad925b38de1ef51cb10d84f6e245e.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (test/VoiceConnector/pstnVoiceConnector/voiceConnectorRequest/PSTNResourceProvider)",
         "Environment": Object {
@@ -1224,7 +1309,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "53c95d71cfd280747d971a38505aea07f812fdba75874a090358a2fc4f58f79b.zip",
+          "S3Key": "8e3d635893ea17fa3158623489cd42c680fad925b38de1ef51cb10d84f6e245e.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (test/VoiceConnector/voiceConnectorPhoneNumber/ChimePhoneNumber/PSTNResourceProvider)",
         "Environment": Object {

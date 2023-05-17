@@ -1,16 +1,32 @@
-import { Stack, Duration } from 'aws-cdk-lib';
-import * as ec2 from 'aws-cdk-lib/aws-ec2';
-import * as iam from 'aws-cdk-lib/aws-iam';
+import { Duration, Stack } from 'aws-cdk-lib';
+import {
+  Vpc,
+  SecurityGroup,
+  CfnEIP,
+  Instance,
+  MachineImage,
+  InstanceType,
+  InstanceClass,
+  InstanceSize,
+  CloudFormationInit,
+  InitConfig,
+  InitFile,
+  InitCommand,
+  CfnEIPAssociation,
+  UserData,
+} from 'aws-cdk-lib/aws-ec2';
+import { Role } from 'aws-cdk-lib/aws-iam';
+import { StringParameter } from 'aws-cdk-lib/aws-ssm';
 import { Construct } from 'constructs';
 
 interface AsteriskProps {
-  asteriskEip: ec2.CfnEIP;
+  asteriskEip: CfnEIP;
   pstnVoiceConnectorArn: string;
   pstnVoiceConnectorPhone: string;
   pstnVoiceConnectorId: string;
-  vpc: ec2.Vpc;
-  securityGroup: ec2.SecurityGroup;
-  asteriskRole: iam.Role;
+  vpc: Vpc;
+  securityGroup: SecurityGroup;
+  asteriskRole: Role;
 }
 export class Asterisk extends Construct {
   public instanceId: string;
@@ -18,80 +34,87 @@ export class Asterisk extends Construct {
   constructor(scope: Construct, id: string, props: AsteriskProps) {
     super(scope, id);
 
-    const ami = new ec2.AmazonLinuxImage({
-      generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
-      cpuType: ec2.AmazonLinuxCpuType.ARM_64,
+    const parameterName =
+      '/aws/service/canonical/ubuntu/server/jammy/stable/current/arm64/hvm/ebs-gp2/ami-id';
+    const ubuntuAmiId = StringParameter.valueForStringParameter(
+      this,
+      parameterName,
+    );
+
+    const ubuntuAmi = MachineImage.genericLinux({
+      'us-east-1': ubuntuAmiId,
     });
 
-    const ec2Instance = new ec2.Instance(this, 'Instance', {
+    const userData = UserData.forLinux();
+    userData.addCommands(
+      'apt-get update',
+      'while fuser /var/lib/dpkg/lock >/dev/null 2>&1 ; do sleep 1 ; done',
+      'mkdir -p /opt/aws/bin',
+      'apt-get install -y python3-pip unzip jq asterisk',
+      'pip3 install https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-py3-latest.tar.gz',
+      'ln -s /root/aws-cfn-bootstrap-latest/init/ubuntu/cfn-hup /etc/init.d/cfn-hup',
+      'ln -s /usr/local/bin/cfn-* /opt/aws/bin/',
+      'curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip"',
+      'unzip -q awscliv2.zip',
+      './aws/install',
+    );
+
+    const ec2Instance = new Instance(this, 'Instance', {
       vpc: props.vpc,
-      instanceType: ec2.InstanceType.of(
-        ec2.InstanceClass.T4G,
-        ec2.InstanceSize.MEDIUM,
-      ),
-      machineImage: ami,
-      init: ec2.CloudFormationInit.fromConfigSets({
+      instanceType: InstanceType.of(InstanceClass.T4G, InstanceSize.MEDIUM),
+      machineImage: ubuntuAmi,
+      userData: userData,
+      init: CloudFormationInit.fromConfigSets({
         configSets: {
-          default: ['install', 'config'],
+          default: ['config'],
         },
         configs: {
-          install: new ec2.InitConfig([
-            ec2.InitFile.fromObject('/etc/config.json', {
+          config: new InitConfig([
+            InitFile.fromObject('/etc/config.json', {
               PSTNVoiceConnector: `${props.pstnVoiceConnectorId}.voiceconnector.chime.aws`,
               PSTNVoiceConnectorPhone: props.pstnVoiceConnectorPhone,
               IP: props.asteriskEip.ref,
               REGION: Stack.of(this).region,
             }),
-            ec2.InitFile.fromFileInline(
-              '/etc/install.sh',
-              './resources/asteriskConfig/install.sh',
-            ),
-            ec2.InitCommand.shellCommand('chmod +x /etc/install.sh'),
-            ec2.InitCommand.shellCommand('cd /tmp'),
-            ec2.InitCommand.shellCommand(
-              '/etc/install.sh 2>&1 | tee /var/log/asterisk_install.log',
-            ),
-          ]),
-          config: new ec2.InitConfig([
-            ec2.InitFile.fromFileInline(
+            InitFile.fromFileInline(
               '/etc/asterisk/pjsip.conf',
-              './resources/asteriskConfig/pjsip.conf',
+              'src/resources/asteriskConfig/pjsip.conf',
             ),
-            ec2.InitFile.fromFileInline(
+            InitFile.fromFileInline(
               '/etc/asterisk/asterisk.conf',
-              './resources/asteriskConfig/asterisk.conf',
+              'src/resources/asteriskConfig/asterisk.conf',
             ),
-            ec2.InitFile.fromFileInline(
+            InitFile.fromFileInline(
               '/etc/asterisk/http.conf',
-              './resources/asteriskConfig/http.conf',
+              'src/resources/asteriskConfig/http.conf',
             ),
-            ec2.InitFile.fromFileInline(
+            InitFile.fromFileInline(
               '/etc/asterisk/rtp.conf',
-              './resources/asteriskConfig/rtp.conf',
+              'src/resources/asteriskConfig/rtp.conf',
             ),
-            ec2.InitFile.fromFileInline(
+            InitFile.fromFileInline(
               '/etc/asterisk/logger.conf',
-              './resources/asteriskConfig/logger.conf',
+              'src/resources/asteriskConfig/logger.conf',
             ),
-            ec2.InitFile.fromFileInline(
+            InitFile.fromFileInline(
               '/etc/asterisk/extensions.conf',
-              './resources/asteriskConfig/extensions.conf',
+              'src/resources/asteriskConfig/extensions.conf',
             ),
-            ec2.InitFile.fromFileInline(
+            InitFile.fromFileInline(
               '/etc/asterisk/modules.conf',
-              './resources/asteriskConfig/modules.conf',
+              'src/resources/asteriskConfig/modules.conf',
             ),
-            ec2.InitFile.fromFileInline(
+            InitFile.fromFileInline(
               '/etc/config_asterisk.sh',
-              './resources/asteriskConfig/config_asterisk.sh',
+              'src/resources/asteriskConfig/config_asterisk.sh',
             ),
-            ec2.InitCommand.shellCommand('chmod +x /etc/config_asterisk.sh'),
-            ec2.InitCommand.shellCommand('/etc/config_asterisk.sh'),
+            InitCommand.shellCommand('chmod +x /etc/config_asterisk.sh'),
+            InitCommand.shellCommand('/etc/config_asterisk.sh'),
           ]),
         },
       }),
       initOptions: {
-        timeout: Duration.minutes(20),
+        timeout: Duration.minutes(5),
         includeUrl: true,
         includeRole: true,
         printLog: true,
@@ -100,7 +123,7 @@ export class Asterisk extends Construct {
       role: props.asteriskRole,
     });
 
-    new ec2.CfnEIPAssociation(this, 'EIP Association', {
+    new CfnEIPAssociation(this, 'EIP Association', {
       eip: props.asteriskEip.ref,
       instanceId: ec2Instance.instanceId,
     });
