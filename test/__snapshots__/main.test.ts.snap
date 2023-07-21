@@ -10,107 +10,6 @@ Object {
         },
       },
     },
-    "DefaultCrNodeVersionMap": Object {
-      "af-south-1": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-east-1": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-northeast-1": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-northeast-2": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-northeast-3": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-south-1": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-south-2": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-southeast-1": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-southeast-2": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-southeast-3": Object {
-        "value": "nodejs16.x",
-      },
-      "ca-central-1": Object {
-        "value": "nodejs16.x",
-      },
-      "cn-north-1": Object {
-        "value": "nodejs16.x",
-      },
-      "cn-northwest-1": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-central-1": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-central-2": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-north-1": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-south-1": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-south-2": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-west-1": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-west-2": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-west-3": Object {
-        "value": "nodejs16.x",
-      },
-      "me-central-1": Object {
-        "value": "nodejs16.x",
-      },
-      "me-south-1": Object {
-        "value": "nodejs16.x",
-      },
-      "sa-east-1": Object {
-        "value": "nodejs16.x",
-      },
-      "us-east-1": Object {
-        "value": "nodejs16.x",
-      },
-      "us-east-2": Object {
-        "value": "nodejs16.x",
-      },
-      "us-gov-east-1": Object {
-        "value": "nodejs16.x",
-      },
-      "us-gov-west-1": Object {
-        "value": "nodejs16.x",
-      },
-      "us-iso-east-1": Object {
-        "value": "nodejs14.x",
-      },
-      "us-iso-west-1": Object {
-        "value": "nodejs14.x",
-      },
-      "us-isob-east-1": Object {
-        "value": "nodejs14.x",
-      },
-      "us-west-1": Object {
-        "value": "nodejs16.x",
-      },
-      "us-west-2": Object {
-        "value": "nodejs16.x",
-      },
-    },
   },
   "Outputs": Object {
     "DistributionUrl": Object {
@@ -121,31 +20,6 @@ Object {
         ],
       },
     },
-    "password": Object {
-      "Value": Object {
-        "Ref": "AsteriskInstanceDB134462d263b2aaa7e295c2",
-      },
-    },
-    "sipuri": Object {
-      "Value": Object {
-        "Fn::Join": Array [
-          "",
-          Array [
-            "sip:",
-            Object {
-              "Fn::GetAtt": Array [
-                "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberpstnCustomResource78CB2D67",
-                "phoneNumber",
-              ],
-            },
-            "@",
-            Object {
-              "Ref": "VPCasteriskEip406AFABB",
-            },
-          ],
-        ],
-      },
-    },
     "ssmCommand": Object {
       "Value": Object {
         "Fn::Join": Array [
@@ -153,33 +27,8 @@ Object {
           Array [
             "aws ssm start-session --target ",
             Object {
-              "Ref": "AsteriskInstanceDB134462d263b2aaa7e295c2",
+              "Ref": "AsteriskInstanceDB134462e3aabb904063d81a",
             },
-          ],
-        ],
-      },
-    },
-    "voiceConnectorPhone": Object {
-      "Value": Object {
-        "Fn::GetAtt": Array [
-          "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberpstnCustomResource78CB2D67",
-          "phoneNumber",
-        ],
-      },
-    },
-    "websocket": Object {
-      "Value": Object {
-        "Fn::Join": Array [
-          "",
-          Array [
-            "wss://",
-            Object {
-              "Fn::GetAtt": Array [
-                "DistributionResourcesDistribution80C53434",
-                "DomainName",
-              ],
-            },
-            "/ws",
           ],
         ],
       },
@@ -206,7 +55,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "f9346b940b724b094a16ca051c017799995fa93df6da38a0539bf7c000fee50a.zip",
+          "S3Key": "099a3112386fa620b3069790dcf92c8e64bb5341760a8b0a76bfa843f8ad41df.zip",
         },
         "Handler": "index.handler",
         "Role": Object {
@@ -215,15 +64,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": Object {
-          "Fn::FindInMap": Array [
-            "DefaultCrNodeVersionMap",
-            Object {
-              "Ref": "AWS::Region",
-            },
-            "value",
-          ],
-        },
+        "Runtime": "nodejs18.x",
         "Timeout": 120,
       },
       "Type": "AWS::Lambda::Function",
@@ -265,12 +106,12 @@ Object {
           "Ref": "VPCasteriskEip406AFABB",
         },
         "InstanceId": Object {
-          "Ref": "AsteriskInstanceDB134462d263b2aaa7e295c2",
+          "Ref": "AsteriskInstanceDB134462e3aabb904063d81a",
         },
       },
       "Type": "AWS::EC2::EIPAssociation",
     },
-    "AsteriskInstanceDB134462d263b2aaa7e295c2": Object {
+    "AsteriskInstanceDB134462e3aabb904063d81a": Object {
       "CreationPolicy": Object {
         "ResourceSignal": Object {
           "Count": 1,
@@ -678,7 +519,11 @@ systemctl restart nginx",
                   "Fn::Join": Array [
                     "",
                     Array [
-                      "SIP_URL=",
+                      "SIP_URI=sip:",
+                      Object {
+                        "Ref": "VPCasteriskEip406AFABB",
+                      },
+                      "@",
                       Object {
                         "Fn::GetAtt": Array [
                           "DistributionResourcesDistribution80C53434",
@@ -686,9 +531,7 @@ systemctl restart nginx",
                         ],
                       },
                       "
-
 SIP_PASSWORD=test
-
 WEBSOCKET_URL=wss://",
                       Object {
                         "Fn::GetAtt": Array [
@@ -697,16 +540,19 @@ WEBSOCKET_URL=wss://",
                         ],
                       },
                       "/ws
-
 VOICE_CONNECTOR_PHONE=",
                       Object {
                         "Fn::GetAtt": Array [
-                          "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestpstnCustomResource27AF2C83",
-                          "voiceConnectorId",
+                          "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberpstnCustomResource78CB2D67",
+                          "phoneNumber",
                         ],
                       },
                       "
-
+SERVER_IP=",
+                      Object {
+                        "Ref": "VPCasteriskEip406AFABB",
+                      },
+                      "
 ",
                     ],
                   ],
@@ -850,7 +696,7 @@ aws s3 cp s3://",
                 },
                 "/site /home/ubuntu/site --recursive
 usermod -a -G www-data ubuntu
-# fingerprint: 043e3127de46db9f
+# fingerprint: 8c2db2264070edea
 (
   set +e
   /opt/aws/bin/cfn-init -v --region ",
@@ -861,7 +707,7 @@ usermod -a -G www-data ubuntu
                 Object {
                   "Ref": "AWS::StackName",
                 },
-                " --resource AsteriskInstanceDB134462d263b2aaa7e295c2 --url https://cloudformation.",
+                " --resource AsteriskInstanceDB134462e3aabb904063d81a --url https://cloudformation.",
                 Object {
                   "Ref": "AWS::Region",
                 },
@@ -882,7 +728,7 @@ usermod -a -G www-data ubuntu
                 Object {
                   "Ref": "AWS::StackName",
                 },
-                " --resource AsteriskInstanceDB134462d263b2aaa7e295c2 --url https://cloudformation.",
+                " --resource AsteriskInstanceDB134462e3aabb904063d81a --url https://cloudformation.",
                 Object {
                   "Ref": "AWS::Region",
                 },
@@ -963,7 +809,7 @@ usermod -a -G www-data ubuntu
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "88b83f5f61fe6f85ffcd0a37a09a8f3be90e7c090964b0b62b062eb8a5a1a3a7.zip",
+          "S3Key": "e2277687077a2abf9ae1af1cc9565e6715e2ebb62f79ec53aa75a1af9298f642.zip",
         },
         "Description": "/opt/awscli/aws",
       },
@@ -993,7 +839,7 @@ usermod -a -G www-data ubuntu
           },
         ],
         "SourceObjectKeys": Array [
-          "4edd4c5f309cff2099f21642e533faae95ebd2176ab2c3e5d593c4c465d05de5.zip",
+          "9fa73af1c53c7f87dbbe809e05c8a8f5835330e2091e5722c73d48ef0bf760fb.zip",
         ],
       },
       "Type": "Custom::CDKBucketDeployment",
@@ -1125,7 +971,7 @@ usermod -a -G www-data ubuntu
         "Targets": Array [
           Object {
             "Id": Object {
-              "Ref": "AsteriskInstanceDB134462d263b2aaa7e295c2",
+              "Ref": "AsteriskInstanceDB134462e3aabb904063d81a",
             },
           },
         ],
@@ -1261,7 +1107,7 @@ usermod -a -G www-data ubuntu
         "Targets": Array [
           Object {
             "Id": Object {
-              "Ref": "AsteriskInstanceDB134462d263b2aaa7e295c2",
+              "Ref": "AsteriskInstanceDB134462e3aabb904063d81a",
             },
           },
         ],
@@ -1440,7 +1286,7 @@ usermod -a -G www-data ubuntu
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "350185a1069fa20a23a583e20c77f6844218bd73097902362dc94f1a108f5d89.zip",
+          "S3Key": "a657308e723bb9460b800cb3b47dadb74e28243edfe246bf7755c45ec312eb97.zip",
         },
         "Description": Object {
           "Fn::Join": Array [
@@ -1454,7 +1300,7 @@ usermod -a -G www-data ubuntu
             ],
           ],
         },
-        "Handler": "__entrypoint__.handler",
+        "Handler": "index.handler",
         "MemorySize": 128,
         "Role": Object {
           "Fn::GetAtt": Array [
@@ -1462,7 +1308,7 @@ usermod -a -G www-data ubuntu
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -2013,7 +1859,7 @@ usermod -a -G www-data ubuntu
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "8e3d635893ea17fa3158623489cd42c680fad925b38de1ef51cb10d84f6e245e.zip",
+          "S3Key": "f2d30cfc360482320a52a4fcde8a70f3569df79ab30be24650fda58eb60052cf.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (test/VoiceConnector/pstnVoiceConnector/voiceConnectorRequest/PSTNResourceProvider)",
         "Environment": Object {
@@ -2033,7 +1879,7 @@ usermod -a -G www-data ubuntu
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -2172,7 +2018,7 @@ usermod -a -G www-data ubuntu
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "8e3d635893ea17fa3158623489cd42c680fad925b38de1ef51cb10d84f6e245e.zip",
+          "S3Key": "f2d30cfc360482320a52a4fcde8a70f3569df79ab30be24650fda58eb60052cf.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (test/VoiceConnector/voiceConnectorPhoneNumber/ChimePhoneNumber/PSTNResourceProvider)",
         "Environment": Object {
@@ -2192,7 +2038,7 @@ usermod -a -G www-data ubuntu
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
