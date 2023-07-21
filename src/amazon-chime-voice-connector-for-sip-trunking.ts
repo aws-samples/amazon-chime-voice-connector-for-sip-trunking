@@ -62,6 +62,14 @@ export class VoiceConnectorForSIPTrunking extends Stack {
     new CfnOutput(this, 'ssmCommand', {
       value: `aws ssm start-session --target ${serverResources.instanceId}`,
     });
+
+    new CfnOutput(this, 'sshCommand', {
+      value: `ssh ubuntu@${serverResources.instanceId}`,
+    });
+
+    new CfnOutput(this, 'phoneNumber', {
+      value: amazonChimeSDKVoiceResources.phoneNumber.phoneNumber,
+    });
   }
 }
 

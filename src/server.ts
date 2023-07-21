@@ -209,7 +209,7 @@ export class ServerResources extends Construct {
             ),
             InitFile.fromString(
               '/home/ubuntu/site/.env',
-              `SIP_URI=sip:${props.serverEip.ref}@${
+              `SIP_URI=sip:${props.phoneNumber.phoneNumber}@${
                 props.distribution.domainName
               }\nSIP_PASSWORD=${
                 Stack.of(this).artifactId

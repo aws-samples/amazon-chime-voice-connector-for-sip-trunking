@@ -25,7 +25,6 @@ const SipUserAgent = ({ setUserAgent, onInvite }) => {
 
         const ua = new UserAgent(userAgentOptions);
         setUserAgent(ua);
-        console.log(`ua: ${JSON.stringify(ua)}`);
         const registerer = new Registerer(ua);
 
         ua.start().then(() => {

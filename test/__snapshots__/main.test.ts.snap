@@ -20,6 +20,27 @@ Object {
         ],
       },
     },
+    "phoneNumber": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberpstnCustomResource78CB2D67",
+          "phoneNumber",
+        ],
+      },
+    },
+    "sshCommand": Object {
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "ssh ubuntu@",
+            Object {
+              "Ref": "AsteriskInstanceDB1344622d8df6ed65943d74",
+            },
+          ],
+        ],
+      },
+    },
     "ssmCommand": Object {
       "Value": Object {
         "Fn::Join": Array [
@@ -27,7 +48,7 @@ Object {
           Array [
             "aws ssm start-session --target ",
             Object {
-              "Ref": "AsteriskInstanceDB134462e3aabb904063d81a",
+              "Ref": "AsteriskInstanceDB1344622d8df6ed65943d74",
             },
           ],
         ],
@@ -106,12 +127,12 @@ Object {
           "Ref": "VPCasteriskEip406AFABB",
         },
         "InstanceId": Object {
-          "Ref": "AsteriskInstanceDB134462e3aabb904063d81a",
+          "Ref": "AsteriskInstanceDB1344622d8df6ed65943d74",
         },
       },
       "Type": "AWS::EC2::EIPAssociation",
     },
-    "AsteriskInstanceDB134462e3aabb904063d81a": Object {
+    "AsteriskInstanceDB1344622d8df6ed65943d74": Object {
       "CreationPolicy": Object {
         "ResourceSignal": Object {
           "Count": 1,
@@ -521,7 +542,10 @@ systemctl restart nginx",
                     Array [
                       "SIP_URI=sip:",
                       Object {
-                        "Ref": "VPCasteriskEip406AFABB",
+                        "Fn::GetAtt": Array [
+                          "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberpstnCustomResource78CB2D67",
+                          "phoneNumber",
+                        ],
                       },
                       "@",
                       Object {
@@ -696,7 +720,7 @@ aws s3 cp s3://",
                 },
                 "/site /home/ubuntu/site --recursive
 usermod -a -G www-data ubuntu
-# fingerprint: 8c2db2264070edea
+# fingerprint: 6c7edc0d513c3ae8
 (
   set +e
   /opt/aws/bin/cfn-init -v --region ",
@@ -707,7 +731,7 @@ usermod -a -G www-data ubuntu
                 Object {
                   "Ref": "AWS::StackName",
                 },
-                " --resource AsteriskInstanceDB134462e3aabb904063d81a --url https://cloudformation.",
+                " --resource AsteriskInstanceDB1344622d8df6ed65943d74 --url https://cloudformation.",
                 Object {
                   "Ref": "AWS::Region",
                 },
@@ -728,7 +752,7 @@ usermod -a -G www-data ubuntu
                 Object {
                   "Ref": "AWS::StackName",
                 },
-                " --resource AsteriskInstanceDB134462e3aabb904063d81a --url https://cloudformation.",
+                " --resource AsteriskInstanceDB1344622d8df6ed65943d74 --url https://cloudformation.",
                 Object {
                   "Ref": "AWS::Region",
                 },
@@ -839,7 +863,7 @@ usermod -a -G www-data ubuntu
           },
         ],
         "SourceObjectKeys": Array [
-          "9fa73af1c53c7f87dbbe809e05c8a8f5835330e2091e5722c73d48ef0bf760fb.zip",
+          "29f73da4d8bba08df545943554da7a40a3aabfec5586063a44dc09a0371150e6.zip",
         ],
       },
       "Type": "Custom::CDKBucketDeployment",
@@ -971,7 +995,7 @@ usermod -a -G www-data ubuntu
         "Targets": Array [
           Object {
             "Id": Object {
-              "Ref": "AsteriskInstanceDB134462e3aabb904063d81a",
+              "Ref": "AsteriskInstanceDB1344622d8df6ed65943d74",
             },
           },
         ],
@@ -1107,7 +1131,7 @@ usermod -a -G www-data ubuntu
         "Targets": Array [
           Object {
             "Id": Object {
-              "Ref": "AsteriskInstanceDB134462e3aabb904063d81a",
+              "Ref": "AsteriskInstanceDB1344622d8df6ed65943d74",
             },
           },
         ],
