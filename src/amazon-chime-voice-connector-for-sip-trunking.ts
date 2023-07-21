@@ -1,47 +1,66 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { App, Stack, StackProps, CfnOutput } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import { VPC, Asterisk, VoiceConnector } from '.';
+import { config } from 'dotenv';
+import {
+  VPCResources,
+  DistributionResources,
+  ServerResources,
+  AmazonChimeSDKVoiceResources,
+} from '.';
+
+config();
+
+interface VoiceConnectorForSIPTrunkingProps extends StackProps {
+  logLevel: string;
+  sshPubKey: string;
+}
 
 export class VoiceConnectorForSIPTrunking extends Stack {
-  constructor(scope: Construct, id: string, props: StackProps) {
+  constructor(
+    scope: Construct,
+    id: string,
+    props: VoiceConnectorForSIPTrunkingProps,
+  ) {
     super(scope, id, props);
 
-    const vpc = new VPC(this, 'VPC');
-    const voiceConnector = new VoiceConnector(this, 'VoiceConnector', {
-      asteriskEip: vpc.asteriskEip,
-    });
-    const asterisk = new Asterisk(this, 'Asterisk', {
-      asteriskEip: vpc.asteriskEip,
-      pstnVoiceConnectorArn: voiceConnector.pstnVoiceConnectorArn,
-      pstnVoiceConnectorPhone: voiceConnector.pstnVoiceConnectorPhone,
-      pstnVoiceConnectorId: voiceConnector.pstnVoiceConnectorId,
-      vpc: vpc.vpc,
-      securityGroup: vpc.securityGroup,
-      asteriskRole: vpc.asteriskRole,
+    const vpcResources = new VPCResources(this, 'VPC');
+    const amazonChimeSDKVoiceResources = new AmazonChimeSDKVoiceResources(
+      this,
+      'VoiceConnector',
+      {
+        asteriskEip: vpcResources.serverEip,
+      },
+    );
+
+    const distributionResources = new DistributionResources(
+      this,
+      'DistributionResources',
+      {
+        applicationLoadBalancer: vpcResources.applicationLoadBalancer,
+      },
+    );
+
+    const serverResources = new ServerResources(this, 'Asterisk', {
+      serverEip: vpcResources.serverEip,
+      voiceConnector: amazonChimeSDKVoiceResources.voiceConnector,
+      phoneNumber: amazonChimeSDKVoiceResources.phoneNumber,
+      vpc: vpcResources.vpc,
+      voiceSecurityGroup: vpcResources.voiceSecurityGroup,
+      albSecurityGroup: vpcResources.albSecurityGroup,
+      sshSecurityGroup: vpcResources.sshSecurityGroup,
+      logLevel: props.logLevel,
+      sshPubKey: props.sshPubKey,
+      applicationLoadBalancer: vpcResources.applicationLoadBalancer,
+      distribution: distributionResources.distribution,
     });
 
-    new CfnOutput(this, 'PSTN VoiceConnector ARN', {
-      value: voiceConnector.pstnVoiceConnectorArn,
+    new CfnOutput(this, 'DistributionUrl', {
+      value: distributionResources.distribution.domainName,
     });
 
     new CfnOutput(this, 'ssmCommand', {
-      value: `aws ssm start-session --target ${asterisk.instanceId}`,
-    });
-
-    new CfnOutput(this, 'voiceConnectorPhone', {
-      value: voiceConnector.pstnVoiceConnectorPhone,
-    });
-
-    new CfnOutput(this, 'sipuri', {
-      value: 'agent@' + vpc.asteriskEip.ref,
-    });
-    new CfnOutput(this, 'password', { value: asterisk.instanceId });
-    new CfnOutput(this, 'websocket', {
-      value: 'ws://' + vpc.asteriskEip.ref + ':8088/ws',
-    });
-
-    new CfnOutput(this, 'VoiceConnectorId', {
-      value: voiceConnector.pstnVoiceConnectorId,
+      value: `aws ssm start-session --target ${serverResources.instanceId}`,
     });
   }
 }
@@ -51,8 +70,16 @@ const devEnv = {
   region: 'us-east-1',
 };
 
+const stackProps = {
+  logLevel: process.env.LOG_LEVEL || 'INFO',
+  sshPubKey: process.env.SSH_PUB_KEY || ' ',
+};
+
 const app = new App();
 
-new VoiceConnectorForSIPTrunking(app, 'SIPTrunking', { env: devEnv });
+new VoiceConnectorForSIPTrunking(app, 'VoiceConnectorForSIPTrunking', {
+  ...stackProps,
+  env: devEnv,
+});
 
 app.synth();

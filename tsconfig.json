@@ -28,7 +28,8 @@
     "target": "ES2019"
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "src/resources/server/assets/site/**/*.ts?"
   ],
   "exclude": [
     "cdk.out"

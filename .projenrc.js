@@ -1,11 +1,13 @@
 const { awscdk } = require('projen');
 const project = new awscdk.AwsCdkTypeScriptApp({
-  cdkVersion: '2.23.0',
+  cdkVersion: '2.83.0',
   license: 'MIT-0',
   author: 'Court Schuett',
   copyrightOwner: 'Amazon.com, Inc.',
   authorAddress: 'https://aws.amazon.com',
   appEntrypoint: 'amazon-chime-voice-connector-for-sip-trunking.ts',
+  tsconfig: { include: ['src/resources/server/assets/site/**/*.ts?'] },
+  eslintOptions: { ignorePatterns: ['src/resources/server/assets/site/**'] },
   depsUpgradeOptions: {
     ignoreProjen: false,
     workflowOptions: {
@@ -21,8 +23,8 @@ const project = new awscdk.AwsCdkTypeScriptApp({
   defaultReleaseBranch: 'main',
   name: 'amazon-chime-voice-connector-for-sip-trunking',
   eslintOptions: { ignorePatterns: ['resources/**'] },
-  devDeps: ['@types/prettier@2.6.0', 'esbuild', 'got@11.8.5', 'ts-node@^10'],
-  deps: ['cdk-amazon-chime-resources'],
+  devDeps: ['esbuild'],
+  deps: ['cdk-amazon-chime-resources', 'dotenv'],
 });
 
 const common_exclude = [
@@ -34,7 +36,7 @@ const common_exclude = [
   '.yalc',
 ];
 project.addTask('launch', {
-  exec: 'yarn && yarn projen && yarn build && yarn cdk bootstrap && yarn cdk deploy -O site/src/cdk-outputs.json',
+  exec: 'yarn && yarn projen && yarn build && yarn cdk bootstrap && yarn cdk deploy --require-approval never',
 });
 project.gitignore.exclude(...common_exclude);
 project.synth();
