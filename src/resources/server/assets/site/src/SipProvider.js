@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { UserAgent, Registerer, Inviter, SessionState } from 'sip.js';
+import { UserAgent, Registerer, Inviter, SessionState, Session } from 'sip.js';
 import SipUserAgent from './SipUserAgent';
 import PhoneNumberInput from './PhoneNumberInput';
 import CallButtons from './CallButtons';
 import IncomingCallAlert from './IncomingCallAlert';
+import { Container, ContentLayout, SpaceBetween, TopNavigation, Header, Button } from '@cloudscape-design/components';
 
 const SIP_URI = process.env.SIP_URI || '';
 const SIP_PASSWORD = process.env.SIP_PASSWORD || '';
@@ -25,6 +26,10 @@ const SipProvider = ({ children }) => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [sessionState, setSessionState] = useState(null);
     const [customHeaders, setCustomHeaders] = useState([]);
+    const [isRegistered, setIsRegistered] = useState(false);
+    const [registerer, setRegisterer] = useState(null); // Add this line to declare the registerer state
+    const [remoteIdentity, setRemoteIdentity] = useState(null);
+
     const mediaElementRef = useRef(null);
 
     const setupRemoteMedia = (session) => {
@@ -68,11 +73,14 @@ const SipProvider = ({ children }) => {
             switch (newState) {
                 case SessionState.Established:
                     console.log('Inbound Call Established');
+                    console.log('Invitation: ', invitation);
+                    setRemoteIdentity(invitation.incomingInviteRequest.message.from.uri.normal.user);
                     setupRemoteMedia(invitation);
                     setSession(invitation);
                     break;
                 case SessionState.Terminated:
                     console.log('Inbound Call Terminated');
+                    setIncomingCall(null);
                     setSession(null);
                     cleanupMedia();
                     break;
@@ -82,18 +90,57 @@ const SipProvider = ({ children }) => {
         });
     }, []);
 
+    useEffect(() => {
+        const userAgentOptions = {
+            authorizationPassword: SIP_PASSWORD,
+            authorizationUsername: VOICE_CONNECTOR_PHONE,
+            transportOptions,
+            uri,
+            delegate: { onInvite },
+        };
+
+        const ua = new UserAgent(userAgentOptions);
+        setUserAgent(ua);
+        const reg = new Registerer(ua);
+        setRegisterer(reg);
+
+        try {
+            ua.start().then(() => {
+                reg.register();
+                setIsRegistered(true);
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    }, []);
+
+    useEffect(() => {
+        let timeoutId;
+        if (sessionState === SessionState.Terminated) {
+            timeoutId = setTimeout(() => {
+                setSessionState(null);
+            }, 5000); // 5000 milliseconds = 5 seconds
+        }
+
+        return () => clearTimeout(timeoutId); // cleanup function to clear the timeout if component unmounts
+    }, [sessionState]);
+
     const acceptCall = () => {
         if (incomingCall) {
-            incomingCall.accept();
-            setSession(incomingCall);
-            setIncomingCall(null);
+            if (sessionState != SessionState.Establishing) {
+                incomingCall.accept();
+                setSession(incomingCall);
+                setIncomingCall(null);
+            }
         }
     };
 
     const rejectCall = () => {
         if (incomingCall) {
-            incomingCall.reject();
-            setIncomingCall(null);
+            if (sessionState != SessionState.Establishing) {
+                incomingCall.reject();
+                setIncomingCall(null);
+            }
         }
     };
 
@@ -133,43 +180,35 @@ const SipProvider = ({ children }) => {
         }
     };
 
-    useEffect(() => {
-        const userAgentOptions = {
-            authorizationPassword: SIP_PASSWORD,
-            authorizationUsername: VOICE_CONNECTOR_PHONE,
-            transportOptions,
-            uri,
-            delegate: { onInvite },
-        };
-
-        const ua = new UserAgent(userAgentOptions);
-        setUserAgent(ua);
-        const registerer = new Registerer(ua);
-
-        ua.start().then(() => {
-            registerer.register();
-        });
-    }, []);
-
-    useEffect(() => {
-        let timeoutId;
-        if (sessionState === SessionState.Terminated) {
-            timeoutId = setTimeout(() => {
-                setSessionState(null);
-            }, 5000); // 5000 milliseconds = 5 seconds
-        }
-
-        return () => clearTimeout(timeoutId); // cleanup function to clear the timeout if component unmounts
-    }, [sessionState]);
-
     // Some function to end the call
     const hangUp = () => {
         if (session) {
-            console.log('Hanging Up');
-            console.log('Current Session: ', session);
-            session.bye();
-            setSession(null);
-            setSessionState(SessionState.Terminated);
+            if (sessionState != SessionState.Established) {
+                console.log('Session already Terminated');
+            } else {
+                console.log('Hanging Up');
+                console.log('Current Session: ', session);
+                session.bye();
+                setSession(null);
+                setSessionState(SessionState.Terminated);
+            }
+        }
+    };
+
+    const unregister = () => {
+        console.log('Unregistering');
+        if (registerer) {
+            registerer.unregister({ all: true });
+            setIsRegistered(false);
+        }
+    };
+
+    const register = () => {
+        console.log('Registering');
+        if (registerer) {
+            const response = registerer.register();
+            console.log(response);
+            setIsRegistered(true);
         }
     };
 
@@ -179,12 +218,57 @@ const SipProvider = ({ children }) => {
 
     return (
         <div>
-            {children}
-            <SipUserAgent setUserAgent={setUserAgent} onInvite={onInvite} />
-            <PhoneNumberInput phoneNumber={phoneNumber} setPhoneNumber={setPhoneNumber} />
-            <CallButtons makeCall={makeCall} hangUp={hangUp} sessionState={sessionState} />
-            <IncomingCallAlert incomingCall={incomingCall} acceptCall={acceptCall} rejectCall={rejectCall} />
-            <video ref={mediaElementRef} autoPlay />
+            <Container>
+                {children}
+                <TopNavigation
+                    identity={{
+                        href: '#',
+                    }}
+                    utilities={[
+                        {
+                            type: 'button',
+                            text: incomingCall
+                                ? `Incoming call from ${incomingCall.remoteIdentity.uri.user}`
+                                : sessionState === SessionState.Establishing
+                                ? 'Establishing session...'
+                                : sessionState === SessionState.Terminated
+                                ? 'Session Terminated'
+                                : sessionState === SessionState.Established
+                                ? `Session established with ${remoteIdentity}`
+                                : '',
+                        },
+                        {
+                            type: 'button',
+                            iconName: isRegistered ? 'status-positive' : 'status-negative',
+                            ariaLabel: 'Status',
+                            badge: false,
+                            disableUtilityCollapse: true,
+                        },
+                        {
+                            type: 'menu-dropdown',
+                            iconName: 'settings',
+                            ariaLabel: 'Registration',
+                            title: 'Registration',
+                            onItemClick: () => {
+                                isRegistered ? unregister() : register();
+                            },
+                            items: [
+                                {
+                                    id: 'register',
+                                    text: isRegistered ? 'Unregister' : 'Register',
+                                },
+                            ],
+                        },
+                    ]}
+                />
+            </Container>
+            <Container>
+                <SipUserAgent setUserAgent={setUserAgent} onInvite={onInvite} />
+                <PhoneNumberInput phoneNumber={phoneNumber} setPhoneNumber={setPhoneNumber} />
+                <CallButtons makeCall={makeCall} hangUp={hangUp} sessionState={sessionState} />
+                <IncomingCallAlert incomingCall={incomingCall} acceptCall={acceptCall} rejectCall={rejectCall} />
+                <video ref={mediaElementRef} autoPlay />
+            </Container>
         </div>
     );
 };

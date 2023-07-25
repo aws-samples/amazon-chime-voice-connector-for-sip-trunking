@@ -35,7 +35,7 @@ Object {
           Array [
             "ssh ubuntu@",
             Object {
-              "Ref": "AsteriskInstanceDB1344622d8df6ed65943d74",
+              "Ref": "VPCasteriskEip406AFABB",
             },
           ],
         ],
@@ -48,7 +48,7 @@ Object {
           Array [
             "aws ssm start-session --target ",
             Object {
-              "Ref": "AsteriskInstanceDB1344622d8df6ed65943d74",
+              "Ref": "AsteriskInstanceDB1344621571cf349fa7d2b1",
             },
           ],
         ],
@@ -127,12 +127,12 @@ Object {
           "Ref": "VPCasteriskEip406AFABB",
         },
         "InstanceId": Object {
-          "Ref": "AsteriskInstanceDB1344622d8df6ed65943d74",
+          "Ref": "AsteriskInstanceDB1344621571cf349fa7d2b1",
         },
       },
       "Type": "AWS::EC2::EIPAssociation",
     },
-    "AsteriskInstanceDB1344622d8df6ed65943d74": Object {
+    "AsteriskInstanceDB1344621571cf349fa7d2b1": Object {
       "CreationPolicy": Object {
         "ResourceSignal": Object {
           "Count": 1,
@@ -489,6 +489,7 @@ systemctl restart asterisk
 /sbin/asterisk -rx \\"core reload\\"
 
 cd /home/ubuntu/site
+chown ubuntu:ubuntu . -R
 yarn && yarn run build
 systemctl enable nginx
 systemctl restart nginx",
@@ -720,7 +721,7 @@ aws s3 cp s3://",
                 },
                 "/site /home/ubuntu/site --recursive
 usermod -a -G www-data ubuntu
-# fingerprint: 6c7edc0d513c3ae8
+# fingerprint: ad6ab710b80026a5
 (
   set +e
   /opt/aws/bin/cfn-init -v --region ",
@@ -731,7 +732,7 @@ usermod -a -G www-data ubuntu
                 Object {
                   "Ref": "AWS::StackName",
                 },
-                " --resource AsteriskInstanceDB1344622d8df6ed65943d74 --url https://cloudformation.",
+                " --resource AsteriskInstanceDB1344621571cf349fa7d2b1 --url https://cloudformation.",
                 Object {
                   "Ref": "AWS::Region",
                 },
@@ -752,7 +753,7 @@ usermod -a -G www-data ubuntu
                 Object {
                   "Ref": "AWS::StackName",
                 },
-                " --resource AsteriskInstanceDB1344622d8df6ed65943d74 --url https://cloudformation.",
+                " --resource AsteriskInstanceDB1344621571cf349fa7d2b1 --url https://cloudformation.",
                 Object {
                   "Ref": "AWS::Region",
                 },
@@ -863,7 +864,7 @@ usermod -a -G www-data ubuntu
           },
         ],
         "SourceObjectKeys": Array [
-          "29f73da4d8bba08df545943554da7a40a3aabfec5586063a44dc09a0371150e6.zip",
+          "640b9bea2ccd2c2fbf31701e2009eb57174ddddafa84cf3a3aa32b5eb6c74f5a.zip",
         ],
       },
       "Type": "Custom::CDKBucketDeployment",
@@ -995,7 +996,7 @@ usermod -a -G www-data ubuntu
         "Targets": Array [
           Object {
             "Id": Object {
-              "Ref": "AsteriskInstanceDB1344622d8df6ed65943d74",
+              "Ref": "AsteriskInstanceDB1344621571cf349fa7d2b1",
             },
           },
         ],
@@ -1131,7 +1132,7 @@ usermod -a -G www-data ubuntu
         "Targets": Array [
           Object {
             "Id": Object {
-              "Ref": "AsteriskInstanceDB1344622d8df6ed65943d74",
+              "Ref": "AsteriskInstanceDB1344621571cf349fa7d2b1",
             },
           },
         ],
@@ -1318,7 +1319,7 @@ usermod -a -G www-data ubuntu
             Array [
               "Lambda function for auto-deleting objects in ",
               Object {
-                "Ref": "AsteriskassetBucket6F81CF71",
+                "Ref": "DistributionResourcesDistributionLoggingBucket4B0B2DF4",
               },
               " S3 bucket.",
             ],
@@ -1401,6 +1402,14 @@ usermod -a -G www-data ubuntu
           "Enabled": true,
           "HttpVersion": "http2",
           "IPV6Enabled": true,
+          "Logging": Object {
+            "Bucket": Object {
+              "Fn::GetAtt": Array [
+                "DistributionResourcesDistributionLoggingBucket4B0B2DF4",
+                "RegionalDomainName",
+              ],
+            },
+          },
           "Origins": Array [
             Object {
               "CustomOriginConfig": Object {
@@ -1439,6 +1448,105 @@ usermod -a -G www-data ubuntu
         },
       },
       "Type": "AWS::CloudFront::Distribution",
+    },
+    "DistributionResourcesDistributionLoggingBucket4B0B2DF4": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "BucketEncryption": Object {
+          "ServerSideEncryptionConfiguration": Array [
+            Object {
+              "ServerSideEncryptionByDefault": Object {
+                "SSEAlgorithm": "AES256",
+              },
+            },
+          ],
+        },
+        "OwnershipControls": Object {
+          "Rules": Array [
+            Object {
+              "ObjectOwnership": "BucketOwnerPreferred",
+            },
+          ],
+        },
+        "Tags": Array [
+          Object {
+            "Key": "aws-cdk:auto-delete-objects",
+            "Value": "true",
+          },
+        ],
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "DistributionResourcesDistributionLoggingBucketAutoDeleteObjectsCustomResourceB5C84D5A": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "DistributionResourcesDistributionLoggingBucketPolicy908C377F",
+      ],
+      "Properties": Object {
+        "BucketName": Object {
+          "Ref": "DistributionResourcesDistributionLoggingBucket4B0B2DF4",
+        },
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::S3AutoDeleteObjects",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "DistributionResourcesDistributionLoggingBucketPolicy908C377F": Object {
+      "Properties": Object {
+        "Bucket": Object {
+          "Ref": "DistributionResourcesDistributionLoggingBucket4B0B2DF4",
+        },
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "s3:GetBucket*",
+                "s3:List*",
+                "s3:DeleteObject*",
+              ],
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::GetAtt": Array [
+                    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+                    "Arn",
+                  ],
+                },
+              },
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "DistributionResourcesDistributionLoggingBucket4B0B2DF4",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "DistributionResourcesDistributionLoggingBucket4B0B2DF4",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::S3::BucketPolicy",
     },
     "PSTNResources1DB9F314": Object {
       "DependsOn": Array [

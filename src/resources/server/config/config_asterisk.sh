@@ -34,6 +34,7 @@ systemctl restart asterisk
 /sbin/asterisk -rx "core reload"
 
 cd /home/ubuntu/site
+chown ubuntu:ubuntu . -R
 yarn && yarn run build
 systemctl enable nginx
 systemctl restart nginx

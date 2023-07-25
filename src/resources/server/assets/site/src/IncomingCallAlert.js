@@ -1,6 +1,7 @@
 // IncomingCallAlert.js
 
 import React from 'react';
+import { Container, ContentLayout, SpaceBetween, TopNavigation, Header, Button } from '@cloudscape-design/components';
 
 const IncomingCallAlert = ({ incomingCall, acceptCall, rejectCall }) => {
     if (!incomingCall) {
@@ -10,8 +11,8 @@ const IncomingCallAlert = ({ incomingCall, acceptCall, rejectCall }) => {
     return (
         <div>
             <h2>Incoming call from {incomingCall.remoteIdentity.uri.user}</h2>
-            <button onClick={acceptCall}>Accept</button>
-            <button onClick={rejectCall}>Reject</button>
+            <Button onClick={acceptCall}>Accept</Button>
+            <Button onClick={rejectCall}>Reject</Button>
         </div>
     );
 };

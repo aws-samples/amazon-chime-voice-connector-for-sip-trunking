@@ -64,7 +64,7 @@ export class VoiceConnectorForSIPTrunking extends Stack {
     });
 
     new CfnOutput(this, 'sshCommand', {
-      value: `ssh ubuntu@${serverResources.instanceId}`,
+      value: `ssh ubuntu@${vpcResources.serverEip.ref}`,
     });
 
     new CfnOutput(this, 'phoneNumber', {
