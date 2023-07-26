@@ -295,13 +295,7 @@ yarn launch
 
 ### Local Client
 
-To use the included web client SIP phone:
-
-```
-cd site
-yarn
-yarn run start
-```
+Use the Cloudfront Distribution
 
 ### Cleanup
 
