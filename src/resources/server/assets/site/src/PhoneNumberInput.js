@@ -2,10 +2,14 @@ import React from 'react';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 
-const PhoneNumberInput = ({ phoneNumber, setPhoneNumber }) => {
+const PhoneNumberInput = ({ isRegistered, phoneNumber, setPhoneNumber }) => {
+    if (!isRegistered) {
+        return null;
+    }
+
     return (
         <PhoneInput
-            style={{ width: '20%' }}
+            style={{ maxWidth: '300px', paddingTop: '20px' }}
             defaultCountry="US"
             placeholder="Enter phone number"
             value={phoneNumber}

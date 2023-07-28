@@ -14,9 +14,18 @@ Object {
   "Outputs": Object {
     "DistributionUrl": Object {
       "Value": Object {
-        "Fn::GetAtt": Array [
-          "DistributionResourcesDistribution80C53434",
-          "DomainName",
+        "Fn::Join": Array [
+          "",
+          Array [
+            "https://",
+            Object {
+              "Fn::GetAtt": Array [
+                "DistributionResourcesDistribution80C53434",
+                "DomainName",
+              ],
+            },
+            "/",
+          ],
         ],
       },
     },
@@ -864,7 +873,7 @@ usermod -a -G www-data ubuntu
           },
         ],
         "SourceObjectKeys": Array [
-          "640b9bea2ccd2c2fbf31701e2009eb57174ddddafa84cf3a3aa32b5eb6c74f5a.zip",
+          "9ac7b32fe5ceee33a1cb3dd8debf153dc98c7dad96549b2a8fb44788d8febff5.zip",
         ],
       },
       "Type": "Custom::CDKBucketDeployment",

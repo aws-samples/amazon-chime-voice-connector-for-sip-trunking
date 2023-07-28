@@ -2,9 +2,18 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { UserAgent, Registerer, Inviter, SessionState, Session } from 'sip.js';
 import SipUserAgent from './SipUserAgent';
 import PhoneNumberInput from './PhoneNumberInput';
-import CallButtons from './CallButtons';
-import IncomingCallAlert from './IncomingCallAlert';
-import { Container, ContentLayout, SpaceBetween, TopNavigation, Header, Button } from '@cloudscape-design/components';
+import CallControl from './CallControl';
+import MediaContainer from './MediaContainer';
+
+import {
+    Container,
+    ContentLayout,
+    SpaceBetween,
+    AppLayout,
+    TopNavigation,
+    Header,
+    Button,
+} from '@cloudscape-design/components';
 
 const SIP_URI = process.env.SIP_URI || '';
 const SIP_PASSWORD = process.env.SIP_PASSWORD || '';
@@ -175,6 +184,7 @@ const SipProvider = ({ children }) => {
                 });
 
                 console.log('Outgoing Session: ', outgoingSession);
+                setRemoteIdentity(outgoingSession.remoteIdentity.uri.normal.user);
                 setSession(outgoingSession);
             }
         }
@@ -217,59 +227,96 @@ const SipProvider = ({ children }) => {
     }
 
     return (
-        <div>
-            <Container>
-                {children}
-                <TopNavigation
-                    identity={{
-                        href: '#',
-                    }}
-                    utilities={[
-                        {
-                            type: 'button',
-                            text: incomingCall
-                                ? `Incoming call from ${incomingCall.remoteIdentity.uri.user}`
-                                : sessionState === SessionState.Establishing
-                                ? 'Establishing session...'
-                                : sessionState === SessionState.Terminated
-                                ? 'Session Terminated'
-                                : sessionState === SessionState.Established
-                                ? `Session established with ${remoteIdentity}`
-                                : '',
+        <>
+            <TopNavigation
+                identity={{
+                    href: '#',
+                    title: VOICE_CONNECTOR_PHONE,
+                }}
+                utilities={[
+                    {
+                        type: 'button',
+                        text: incomingCall
+                            ? `Incoming call from ${incomingCall.remoteIdentity.uri.user}`
+                            : sessionState === SessionState.Establishing
+                            ? 'Establishing session...'
+                            : sessionState === SessionState.Terminated
+                            ? 'Session Terminated'
+                            : sessionState === SessionState.Established
+                            ? `Session established with ${remoteIdentity}`
+                            : '',
+                    },
+                    {
+                        type: 'button',
+                        iconName: isRegistered ? 'status-positive' : 'status-negative',
+                        ariaLabel: 'Status',
+                        badge: false,
+                        disableUtilityCollapse: true,
+                    },
+                    {
+                        type: 'menu-dropdown',
+                        iconName: 'settings',
+                        ariaLabel: 'Registration',
+                        title: 'Registration',
+                        onItemClick: () => {
+                            isRegistered ? unregister() : register();
                         },
-                        {
-                            type: 'button',
-                            iconName: isRegistered ? 'status-positive' : 'status-negative',
-                            ariaLabel: 'Status',
-                            badge: false,
-                            disableUtilityCollapse: true,
-                        },
-                        {
-                            type: 'menu-dropdown',
-                            iconName: 'settings',
-                            ariaLabel: 'Registration',
-                            title: 'Registration',
-                            onItemClick: () => {
-                                isRegistered ? unregister() : register();
+                        items: [
+                            {
+                                id: 'register',
+                                text: isRegistered ? 'Unregister' : 'Register',
                             },
-                            items: [
-                                {
-                                    id: 'register',
-                                    text: isRegistered ? 'Unregister' : 'Register',
-                                },
-                            ],
-                        },
-                    ]}
-                />
-            </Container>
-            <Container>
-                <SipUserAgent setUserAgent={setUserAgent} onInvite={onInvite} />
-                <PhoneNumberInput phoneNumber={phoneNumber} setPhoneNumber={setPhoneNumber} />
-                <CallButtons makeCall={makeCall} hangUp={hangUp} sessionState={sessionState} />
-                <IncomingCallAlert incomingCall={incomingCall} acceptCall={acceptCall} rejectCall={rejectCall} />
-                <video ref={mediaElementRef} autoPlay />
-            </Container>
-        </div>
+                        ],
+                    },
+                ]}
+            />
+            <AppLayout
+                content={
+                    <ContentLayout header={<Header variant="h1">Amazon Chime SDK Voice Connector Phone</Header>}>
+                        <SpaceBetween size="xl" direction="vertical">
+                            {children}
+                            <Container
+                                header={
+                                    <Header
+                                        variant="h2"
+                                        actions={
+                                            <SpaceBetween size="xs" direction="horizontal">
+                                                {/* CallControl component */}
+                                                <CallControl
+                                                    incomingCall={incomingCall}
+                                                    sessionState={sessionState}
+                                                    isRegistered={isRegistered}
+                                                    acceptCall={acceptCall}
+                                                    rejectCall={rejectCall}
+                                                    makeCall={makeCall}
+                                                    hangUp={hangUp}
+                                                />
+                                            </SpaceBetween>
+                                        }
+                                    >
+                                        Call Control
+                                    </Header>
+                                }
+                            >
+                                {/* MediaContainer component */}
+                                <MediaContainer
+                                    sessionState={sessionState}
+                                    onInvite={onInvite}
+                                    setUserAgent={setUserAgent}
+                                    isRegistered={isRegistered}
+                                    phoneNumber={phoneNumber}
+                                    setPhoneNumber={setPhoneNumber}
+                                    mediaElementRef={mediaElementRef}
+                                    incomingCall={incomingCall}
+                                />
+                            </Container>
+                        </SpaceBetween>
+                    </ContentLayout>
+                }
+                navigationHide={true}
+                toolsHide={true}
+            />
+        </>
     );
 };
 

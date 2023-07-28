@@ -56,7 +56,7 @@ export class VoiceConnectorForSIPTrunking extends Stack {
     });
 
     new CfnOutput(this, 'DistributionUrl', {
-      value: distributionResources.distribution.domainName,
+      value: `https://${distributionResources.distribution.domainName}/`,
     });
 
     new CfnOutput(this, 'ssmCommand', {
