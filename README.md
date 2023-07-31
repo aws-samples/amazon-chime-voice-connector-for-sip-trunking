@@ -1,22 +1,22 @@
-## Amazon Chime Voice Connector for SIP Trunking
+## Amazon Chime SDK Voice Connector for SIP Trunking
 
 ## Overview
 
 ![Overview](images/SIP-Trunking-Overview.png)
 
-This demo will deploy and configure an Amazon Chime Voice Connector and an Elastic Compute Cloud (Amazon EC2) instance. This Amazon EC2 instance is deployed to run an [Asterisk](https://www.asterisk.org/) IP Private Branch Exchange (IPPBX) which can be used to make and receive calls from the Public Switched Telephone Network (PSTN) using the [SIP Trunk](https://aws.amazon.com/chime/chime-sdk/features/) feature of Amazon Chime SDK. In this demo, we'll be using an Asterisk IPPBX, but many other IPPBXs can be used as described in the [Configuration Guides](https://aws.amazon.com/chime/chime-sdk/resources/). This Asterisk IPPBX will be configured to use a web client phone that can be used to make and receive calls without installing a softphone.
+This demo will deploy and configure an Amazon Chime SDK Voice Connector and an Elastic Compute Cloud (Amazon EC2) instance. This Amazon EC2 instance is deployed to run an [Asterisk](https://www.asterisk.org/) IP Private Branch Exchange (IPPBX) which can be used to make and receive calls from the Public Switched Telephone Network (PSTN) using the [SIP Trunk](https://aws.amazon.com/chime/chime-sdk/features/) feature of Amazon Chime SDK. In this demo, we'll be using an Asterisk IPPBX, but many other IPPBXs can be used as described in the [Configuration Guides](https://aws.amazon.com/chime/chime-sdk/resources/). This Asterisk IPPBX will be configured to use a web client phone that can be used to make and receive calls without installing a softphone.
 
 ## How It Works
 
-As part of this deployment, an Amazon Chime Voice Connector is created. This can be seen and configured in the [Amazon Chime Console](https://console.chime.aws.amazon.com). The VoiceConnectorId will be used in this README and can be loaded as a variable using the CDK output: `VOICECONNECTORID=` command.
+As part of this deployment, an Amazon Chime SDK Voice Connector is created. This can be seen and configured in the [Amazon Chime Console](https://console.chime.aws.amazon.com). The VoiceConnectorId will be used in this README and can be loaded as a variable using the CDK output: `VOICECONNECTORID=` command.
 
 ![Console](images/Console.png)
 
-This shows an Amazon Chime Voice Connector configured in `us-east-1` without encryption. This demo does not use TLS/SRTP encryption but can be added to a production SIP trunk.
+This shows an Amazon Chime SDK Voice Connector configured in `us-east-1` without encryption. This demo does not use TLS/SRTP encryption but can be added to a production SIP trunk.
 
 ### Termination
 
-Termination refers to the configuration applied for calls made from the IPPBX to the Amazon Chime Voice Connector. This configuration can be seen in the Amazon Chime Console under Termination or from the [Command Line Interface](https://aws.amazon.com/cli/) (AWS CLI).
+Termination refers to the configuration applied for calls made from the IPPBX to the Amazon Chime SDK Voice Connector. This configuration can be seen in the Amazon Chime SDK Console under Termination or from the [Command Line Interface](https://aws.amazon.com/cli/) (AWS CLI).
 
 In this deployment, an example output from this command `aws chime get-voice-connector-termination --voice-connector-id $VOICECONNECTORID` would look like this:
 
@@ -35,15 +35,15 @@ In this deployment, an example output from this command `aws chime get-voice-con
 }
 ```
 
-This indicates that the Amazon Chime Voice Connector will accept calls from a single IP address (198.51.100.204/32) and will allow calling to US numbers. Calls to other country numbers will be rejected. Calls from other IP addresses will also be rejected.
+This indicates that the Amazon Chime SDK Voice Connector will accept calls from a single IP address (198.51.100.204/32) and will allow calling to US numbers. Calls to other country numbers will be rejected. Calls from other IP addresses will also be rejected.
 
-Within the Amazon Chime Console, the SIP OPTIONs status can also be seen.
+Within the Amazon Chime SDK Console, the SIP OPTIONs status can also be seen.
 
 ![OPTIONS](images/OPTIONSPing.png)
 
-This indicates when the last SIP OPTIONS message was received from the IP address listed. This can be useful to determine if your SIP endpoint is able to send SIP traffic to the Amazon Chime Voice Connector.
+This indicates when the last SIP OPTIONS message was received from the IP address listed. This can be useful to determine if your SIP endpoint is able to send SIP traffic to the Amazon Chime SDK Voice Connector.
 
-Within the Asterisk server, this is configured in `pjsip.conf` file:
+Within the Asterisk server, this is configured in the `pjsip.conf` file:
 
 ```asterisk
 [PSTNVoiceConnector]
@@ -54,7 +54,7 @@ qualify_frequency=30
 
 ### Origination
 
-Origination refers to the configuration applied for calls made to the IPPBX from the Amazon Chime Voice Connector. This configuration can be seen in the Amazon Chime Console under Origination or from the AWS CLI command: `aws chime get-voice-connector-origination --voice-connector-id $VOICECONNECTORID`
+Origination refers to the configuration applied for calls made to the IPPBX from the Amazon Chime SDK Voice Connector. This configuration can be seen in the Amazon Chime Console under Origination or from the AWS CLI command: `aws chime get-voice-connector-origination --voice-connector-id $VOICECONNECTORID`
 
 In this deployment, an example of the output will look like this:
 
@@ -75,7 +75,7 @@ In this deployment, an example of the output will look like this:
 }
 ```
 
-This configuration indicates that a single route is configured for this Amazon Chime Voice Connector. This route will send traffic to IP address 198.51.100.204 on port 5060 using the UDP protocol. This configuration is typical for a single target, unencrypted SIP trunk.
+This configuration indicates that a single route is configured for this Amazon Chime SDK Voice Connector. This route will send traffic to IP address 198.51.100.204 on port 5060 using the UDP protocol. This configuration is typical for a single target, unencrypted SIP trunk.
 
 Up to 10 routes can be added to a single Origination. These routes can be configured with different Priority and Weight. Within a single Priority, calls will be routed to Weights proportionally. For example:
 
@@ -116,11 +116,11 @@ In the Logging tab, it is recommended that SIP message and media metric logging 
 
 ![Cloudwatch](images/Cloudwatch.png)
 
-More information on the logs generated by Amazon Chime Voice Connector can be found [here](https://docs.aws.amazon.com/chime/latest/ag/monitoring-cloudwatch.html#cw-logs)
+More information on the logs generated by Amazon Chime SDK Voice Connector can be found [here](https://docs.aws.amazon.com/chime/latest/ag/monitoring-cloudwatch.html#cw-logs)
 
 ### Networking
 
-Amazon Chime Voice Connector uses a range of IPs, Ports, and Protocols. These should be allow listed in any firewall between the Amazon Chime Voice Connector and SIP target. These IPs and Ports can be found [here](https://docs.aws.amazon.com/chime-sdk/latest/ag/network-config.html#cvc). In this demo, these IPs and Ports are configured in the associated Security Group in the Inbound Rules.
+Amazon Chime SDK Voice Connector uses a range of IPs, Ports, and Protocols. These should be allow listed in any firewall between the Amazon Chime SDK Voice Connector and SIP target. These IPs and Ports can be found [here](https://docs.aws.amazon.com/chime-sdk/latest/ag/network-config.html#cvc). In this demo, these IPs and Ports are configured in the associated Security Group in the Inbound Rules.
 
 ![SecurityGroup](images/SecurityGroup.png)
 
@@ -128,7 +128,7 @@ Amazon Chime Voice Connector uses a range of IPs, Ports, and Protocols. These sh
 
 ### Connecting to Asterisk
 
-In order to see SIP messages sent between the Amazon Chime Voice Connector and the IPPBX, you can log in to the Asterisk using AWS Systems Manager. The CDK output includes a command similar to this: `aws ssm start-session --target i-0af203a984c99de58` that can be used to connect to the EC2 instance.
+In order to see SIP messages sent between the Amazon Chime SDK Voice Connector and the IPPBX, you can log in to the Asterisk using AWS Systems Manager. The CDK output includes a command similar to this: `aws ssm start-session --target i-0af203a984c99de58` that can be used to connect to the EC2 instance.
 
 Once logged in:
 
@@ -186,7 +186,7 @@ From: <sip:+18155558245@10.0.58.47:5060>;tag=9eXmFya9j7Hpa
 To: <sip:+16185558387@198.51.100.204:5060>;transport=UDP
 ```
 
-As part of the SIP INVITE, [Session Description Protocol](https://datatracker.ietf.org/doc/html/rfc4566) (SDP) is used to negotiate the Real-time Transport Protocol (RTP). In this INVITE, the `c=IN IP4 3.80.17.149` defines the IP address that media will be sent from. The `m=audio 36488 RTP/AVP 0 101` line offers a single codec - G711μ (0) using port 36488. Additionally, [RFC 2833](https://datatracker.ietf.org/doc/html/rfc2833) is offered (101) for Dual tone multi-frequency (DTMF). This IP address and Port must be allowed through to the SIP endpoint for media to pass from the Amazon Chime Voice Connector to the IPPBX.
+As part of the SIP INVITE, [Session Description Protocol](https://datatracker.ietf.org/doc/html/rfc4566) (SDP) is used to negotiate the Real-time Transport Protocol (RTP). In this INVITE, the `c=IN IP4 3.80.17.149` defines the IP address that media will be sent from. The `m=audio 36488 RTP/AVP 0 101` line offers a single codec - G711μ (0) using port 36488. Additionally, [RFC 2833](https://datatracker.ietf.org/doc/html/rfc2833) is offered (101) for Dual tone multi-frequency (DTMF). This IP address and Port must be allowed through to the SIP endpoint for media to pass from the Amazon Chime SDK Voice Connector to the IPPBX.
 
 ```
 c=IN IP4 3.80.17.149
@@ -252,13 +252,13 @@ From: <sip:+16185558387@10.0.0.141>;tag=8b29e8c9-8801-44fb-b876-5622a69dcb5c
 To: <sip:+18155558245@dr3rbaar376u5r4ntcnlq4.voiceconnector.chime.aws>
 ```
 
-An INVITE sent to Amazon Chime Voice Connector should use E.164 addressing using a FROM number in the Amazon Chime Phone Invetory and should include the Amazon Chime Voice Connector ID in the URI.
+An INVITE sent to Amazon Chime SDK Voice Connector should use E.164 addressing using a FROM number in the Amazon Chime Phone Inventory and should include the Amazon Chime SDK Voice Connector ID in the URI.
 
 ### Packet Captures
 
-In addition to logs captured from Asterisk, [tshark](https://www.wireshark.org/docs/man-pages/tshark.html) can be used for more detailed packet captures. From the Asterisk server: `tshark -f 'udp'` to capture UDP packets in real time. If using UDP on the Amazon Chime Voice Connector, this filter will display both SIP and RTP. To save this information to a file and download: `tshark -f 'udp' -w /tmp/capture.pcap`
+In addition to logs captured from Asterisk, [tshark](https://www.wireshark.org/docs/man-pages/tshark.html) can be used for more detailed packet captures. From the Asterisk server: `tshark -f 'udp'` to capture UDP packets in real time. If using UDP on the Amazon Chime SDK Voice Connector, this filter will display both SIP and RTP. To save this information to a file and download: `tshark -f 'udp' -w /tmp/capture.pcap`
 
-After downloading this capture, it can be viewed in [Wireshark](https://www.wireshark.org/) to see the call flow between the IPPBX and Amazon Chime Voice Connector. This can be used to further troubleshoot calls.
+After downloading this capture, it can be viewed in [Wireshark](https://www.wireshark.org/) to see the call flow between the IPPBX and Amazon Chime SDK Voice Connector. This can be used to further troubleshoot calls.
 
 ![Wireshark](images/Wireshark.png)
 
@@ -270,7 +270,7 @@ A CloudFront Distribution has been deployed with this CDK. That Distribution can
 
 ## What Is Deployed
 
-- Amazon Chime Voice Connector - PSTN Access w/DID
+- Amazon Chime SDK Voice Connector - PSTN Access w/DID
 - Virtual Private Cloud (Amazon VPC)
   - Amazon EC2 - Asterisk Server
   - Elastic IP

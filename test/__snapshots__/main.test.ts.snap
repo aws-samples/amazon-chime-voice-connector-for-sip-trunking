@@ -37,6 +37,22 @@ Object {
         ],
       },
     },
+    "setVoiceConnectorId": Object {
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "export VOICECONNECTORID=",
+            Object {
+              "Fn::GetAtt": Array [
+                "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestpstnCustomResource27AF2C83",
+                "voiceConnectorId",
+              ],
+            },
+          ],
+        ],
+      },
+    },
     "sshCommand": Object {
       "Value": Object {
         "Fn::Join": Array [
@@ -60,6 +76,14 @@ Object {
               "Ref": "AsteriskInstanceDB1344621571cf349fa7d2b1",
             },
           ],
+        ],
+      },
+    },
+    "voiceConnectorId": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestpstnCustomResource27AF2C83",
+          "voiceConnectorId",
         ],
       },
     },
@@ -1450,32 +1474,6 @@ usermod -a -G www-data ubuntu
       },
       "Type": "AWS::CloudFront::Distribution",
     },
-    "PSTNResources1DB9F314": Object {
-      "DependsOn": Array [
-        "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberpstnCustomResourceRoleADB2DE88",
-      ],
-      "Properties": Object {
-        "Architectures": Array [
-          "arm64",
-        ],
-        "Code": Object {
-          "S3Bucket": Object {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "1e85bcd7774f4f9e640d34759bef652508e0ebc55cb6d2b6cdb8600fa9ab8e3b.zip",
-        },
-        "Handler": "index.handler",
-        "Role": Object {
-          "Fn::GetAtt": Array [
-            "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberpstnCustomResourceRoleADB2DE88",
-            "Arn",
-          ],
-        },
-        "Runtime": "python3.9",
-        "Timeout": 60,
-      },
-      "Type": "AWS::Lambda::Function",
-    },
     "VPC61AD6880": Object {
       "Properties": Object {
         "CidrBlock": "10.0.0.0/16",
@@ -1900,7 +1898,7 @@ usermod -a -G www-data ubuntu
           "Variables": Object {
             "USER_ON_EVENT_FUNCTION_ARN": Object {
               "Fn::GetAtt": Array [
-                "PSTNResources1DB9F314",
+                "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestpstnResourcesFunctionDC1FBCF8",
                 "Arn",
               ],
             },
@@ -1959,7 +1957,7 @@ usermod -a -G www-data ubuntu
               "Resource": Array [
                 Object {
                   "Fn::GetAtt": Array [
-                    "PSTNResources1DB9F314",
+                    "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestpstnResourcesFunctionDC1FBCF8",
                     "Arn",
                   ],
                 },
@@ -1969,7 +1967,7 @@ usermod -a -G www-data ubuntu
                     Array [
                       Object {
                         "Fn::GetAtt": Array [
-                          "PSTNResources1DB9F314",
+                          "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestpstnResourcesFunctionDC1FBCF8",
                           "Arn",
                         ],
                       },
@@ -2002,6 +2000,10 @@ usermod -a -G www-data ubuntu
         },
         "properties": Object {
           "encryption": false,
+          "logging": Object {
+            "enableMediaMetricLogs": true,
+            "enableSIPLogs": true,
+          },
           "name": "testVoiceConnectorpstnVoiceConnector668B4AE0",
           "origination": Array [
             Object {
@@ -2042,6 +2044,145 @@ usermod -a -G www-data ubuntu
       "Type": "AWS::CloudFormation::CustomResource",
       "UpdateReplacePolicy": "Delete",
     },
+    "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestpstnCustomResourceRoleC6BE0643": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Description": "Amazon Chime PSTN Resources",
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Policies": Array [
+          Object {
+            "PolicyDocument": Object {
+              "Statement": Array [
+                Object {
+                  "Action": Array [
+                    "chime:*VoiceProfileDomain*",
+                    "kms:CreateGrant",
+                    "kms:DescribeKey",
+                    "chime:*MediaInsightsPipelineConfiguration*",
+                    "chime:CreateSipRule",
+                    "chime:DeleteSipRule",
+                    "chime:UpdateSipRule",
+                    "chime:GetSipRule",
+                    "chime:CreateSipMediaApplication",
+                    "chime:DeleteSipMediaApplication",
+                    "chime:GetPhoneNumberOrder",
+                    "chime:SearchAvailablePhoneNumbers",
+                    "chime:CreatePhoneNumberOrder",
+                    "chime:DeletePhoneNumber",
+                    "chime:GetPhoneNumber",
+                    "chime:CreateVoiceConnector",
+                    "chime:PutVoiceConnectorStreamingConfiguration",
+                    "chime:PutVoiceConnectorTermination",
+                    "chime:PutVoiceConnectorOrigination",
+                    "chime:PutVoiceConnectorLoggingConfiguration",
+                    "chime:ListPhoneNumbers",
+                    "chime:AssociatePhoneNumbersWithVoiceConnector",
+                    "chime:DisassociatePhoneNumbersFromVoiceConnector",
+                    "chime:DeleteVoiceConnector",
+                    "chime:PutSipMediaApplicationAlexaSkillConfiguration",
+                    "chime:PutSipMediaApplicationLoggingConfiguration",
+                    "logs:GetLogDelivery",
+                    "logs:DeleteLogDelivery",
+                    "logs:ListLogDeliveries",
+                    "logs:CreateLogGroup",
+                    "logs:DescribeResourcePolicies",
+                    "logs:PutResourcePolicy",
+                    "logs:DescribeLogGroups",
+                    "logs:CreateLogDelivery",
+                    "lambda:GetPolicy",
+                    "lambda:AddPermission",
+                    "iam:PutRolePolicy",
+                    "iam:CreateServiceLinkedRole",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": "*",
+                },
+                Object {
+                  "Action": Array [
+                    "ssm:PutParameter",
+                    "ssm:GetParameter",
+                    "ssm:DeleteParameter",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        "arn:aws:ssm:",
+                        Object {
+                          "Ref": "AWS::Region",
+                        },
+                        ":",
+                        Object {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":parameter/chime/*",
+                      ],
+                    ],
+                  },
+                },
+              ],
+              "Version": "2012-10-17",
+            },
+            "PolicyName": "chimePolicy",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestpstnResourcesFunctionDC1FBCF8": Object {
+      "DependsOn": Array [
+        "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestpstnCustomResourceRoleC6BE0643",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "17adca7ffd51a469d35bc3b81f5a0add6f87532707cf8ab5b2b4569f57d29d2a.zip",
+        },
+        "Description": "src/resources/pstn/pstn.lambda.ts",
+        "Environment": Object {
+          "Variables": Object {
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+          },
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "VoiceConnectorpstnVoiceConnectorvoiceConnectorRequestpstnCustomResourceRoleC6BE0643",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs18.x",
+        "Timeout": 60,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
     "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberPSTNResourceProviderframeworkonEvent942D8AB0": Object {
       "DependsOn": Array [
         "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberPSTNResourceProviderframeworkonEventServiceRoleDefaultPolicy7F02870F",
@@ -2059,7 +2200,7 @@ usermod -a -G www-data ubuntu
           "Variables": Object {
             "USER_ON_EVENT_FUNCTION_ARN": Object {
               "Fn::GetAtt": Array [
-                "PSTNResources1DB9F314",
+                "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberpstnResourcesFunctionB27A4EBE",
                 "Arn",
               ],
             },
@@ -2087,7 +2228,7 @@ usermod -a -G www-data ubuntu
               "Resource": Array [
                 Object {
                   "Fn::GetAtt": Array [
-                    "PSTNResources1DB9F314",
+                    "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberpstnResourcesFunctionB27A4EBE",
                     "Arn",
                   ],
                 },
@@ -2097,7 +2238,7 @@ usermod -a -G www-data ubuntu
                     Array [
                       Object {
                         "Fn::GetAtt": Array [
-                          "PSTNResources1DB9F314",
+                          "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberpstnResourcesFunctionB27A4EBE",
                           "Arn",
                         ],
                       },
@@ -2206,6 +2347,10 @@ usermod -a -G www-data ubuntu
               "Statement": Array [
                 Object {
                   "Action": Array [
+                    "chime:*VoiceProfileDomain*",
+                    "kms:CreateGrant",
+                    "kms:DescribeKey",
+                    "chime:*MediaInsightsPipelineConfiguration*",
                     "chime:CreateSipRule",
                     "chime:DeleteSipRule",
                     "chime:UpdateSipRule",
@@ -2221,10 +2366,21 @@ usermod -a -G www-data ubuntu
                     "chime:PutVoiceConnectorStreamingConfiguration",
                     "chime:PutVoiceConnectorTermination",
                     "chime:PutVoiceConnectorOrigination",
+                    "chime:PutVoiceConnectorLoggingConfiguration",
                     "chime:ListPhoneNumbers",
                     "chime:AssociatePhoneNumbersWithVoiceConnector",
                     "chime:DisassociatePhoneNumbersFromVoiceConnector",
                     "chime:DeleteVoiceConnector",
+                    "chime:PutSipMediaApplicationAlexaSkillConfiguration",
+                    "chime:PutSipMediaApplicationLoggingConfiguration",
+                    "logs:GetLogDelivery",
+                    "logs:DeleteLogDelivery",
+                    "logs:ListLogDeliveries",
+                    "logs:CreateLogGroup",
+                    "logs:DescribeResourcePolicies",
+                    "logs:PutResourcePolicy",
+                    "logs:DescribeLogGroups",
+                    "logs:CreateLogDelivery",
                     "lambda:GetPolicy",
                     "lambda:AddPermission",
                     "iam:PutRolePolicy",
@@ -2265,6 +2421,35 @@ usermod -a -G www-data ubuntu
         ],
       },
       "Type": "AWS::IAM::Role",
+    },
+    "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberpstnResourcesFunctionB27A4EBE": Object {
+      "DependsOn": Array [
+        "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberpstnCustomResourceRoleADB2DE88",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "17adca7ffd51a469d35bc3b81f5a0add6f87532707cf8ab5b2b4569f57d29d2a.zip",
+        },
+        "Description": "src/resources/pstn/pstn.lambda.ts",
+        "Environment": Object {
+          "Variables": Object {
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+          },
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "VoiceConnectorvoiceConnectorPhoneNumberChimePhoneNumberpstnCustomResourceRoleADB2DE88",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs18.x",
+        "Timeout": 60,
+      },
+      "Type": "AWS::Lambda::Function",
     },
     "VoiceConnectorvoiceConnectorPhoneNumberphoneAssociationC9EFBA64": Object {
       "DeletionPolicy": "Delete",

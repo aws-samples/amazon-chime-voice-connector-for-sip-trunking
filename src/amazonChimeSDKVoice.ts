@@ -47,6 +47,7 @@ export class AmazonChimeSDKVoiceResources extends Construct {
           },
         ],
         encryption: false,
+        loggingConfiguration: { enableMediaMetricLogs: true, enableSIPLogs: true },
       },
     );
 
