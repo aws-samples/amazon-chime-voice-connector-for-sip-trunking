@@ -873,7 +873,7 @@ usermod -a -G www-data ubuntu
           },
         ],
         "SourceObjectKeys": Array [
-          "9ac7b32fe5ceee33a1cb3dd8debf153dc98c7dad96549b2a8fb44788d8febff5.zip",
+          "8f2746268aa93953a0511ae5a715fcca46c893cb2ab0415b1b0c4901d03edc36.zip",
         ],
       },
       "Type": "Custom::CDKBucketDeployment",
@@ -1328,7 +1328,7 @@ usermod -a -G www-data ubuntu
             Array [
               "Lambda function for auto-deleting objects in ",
               Object {
-                "Ref": "DistributionResourcesDistributionLoggingBucket4B0B2DF4",
+                "Ref": "AsteriskassetBucket6F81CF71",
               },
               " S3 bucket.",
             ],
@@ -1411,14 +1411,6 @@ usermod -a -G www-data ubuntu
           "Enabled": true,
           "HttpVersion": "http2",
           "IPV6Enabled": true,
-          "Logging": Object {
-            "Bucket": Object {
-              "Fn::GetAtt": Array [
-                "DistributionResourcesDistributionLoggingBucket4B0B2DF4",
-                "RegionalDomainName",
-              ],
-            },
-          },
           "Origins": Array [
             Object {
               "CustomOriginConfig": Object {
@@ -1457,105 +1449,6 @@ usermod -a -G www-data ubuntu
         },
       },
       "Type": "AWS::CloudFront::Distribution",
-    },
-    "DistributionResourcesDistributionLoggingBucket4B0B2DF4": Object {
-      "DeletionPolicy": "Delete",
-      "Properties": Object {
-        "BucketEncryption": Object {
-          "ServerSideEncryptionConfiguration": Array [
-            Object {
-              "ServerSideEncryptionByDefault": Object {
-                "SSEAlgorithm": "AES256",
-              },
-            },
-          ],
-        },
-        "OwnershipControls": Object {
-          "Rules": Array [
-            Object {
-              "ObjectOwnership": "BucketOwnerPreferred",
-            },
-          ],
-        },
-        "Tags": Array [
-          Object {
-            "Key": "aws-cdk:auto-delete-objects",
-            "Value": "true",
-          },
-        ],
-      },
-      "Type": "AWS::S3::Bucket",
-      "UpdateReplacePolicy": "Delete",
-    },
-    "DistributionResourcesDistributionLoggingBucketAutoDeleteObjectsCustomResourceB5C84D5A": Object {
-      "DeletionPolicy": "Delete",
-      "DependsOn": Array [
-        "DistributionResourcesDistributionLoggingBucketPolicy908C377F",
-      ],
-      "Properties": Object {
-        "BucketName": Object {
-          "Ref": "DistributionResourcesDistributionLoggingBucket4B0B2DF4",
-        },
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
-            "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "Custom::S3AutoDeleteObjects",
-      "UpdateReplacePolicy": "Delete",
-    },
-    "DistributionResourcesDistributionLoggingBucketPolicy908C377F": Object {
-      "Properties": Object {
-        "Bucket": Object {
-          "Ref": "DistributionResourcesDistributionLoggingBucket4B0B2DF4",
-        },
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": Array [
-                "s3:GetBucket*",
-                "s3:List*",
-                "s3:DeleteObject*",
-              ],
-              "Effect": "Allow",
-              "Principal": Object {
-                "AWS": Object {
-                  "Fn::GetAtt": Array [
-                    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
-                    "Arn",
-                  ],
-                },
-              },
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
-                    "DistributionResourcesDistributionLoggingBucket4B0B2DF4",
-                    "Arn",
-                  ],
-                },
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
-                          "DistributionResourcesDistributionLoggingBucket4B0B2DF4",
-                          "Arn",
-                        ],
-                      },
-                      "/*",
-                    ],
-                  ],
-                },
-              ],
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-      },
-      "Type": "AWS::S3::BucketPolicy",
     },
     "PSTNResources1DB9F314": Object {
       "DependsOn": Array [

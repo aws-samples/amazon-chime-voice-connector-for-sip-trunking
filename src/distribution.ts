@@ -9,8 +9,6 @@ import {
 } from 'aws-cdk-lib/aws-cloudfront';
 import { LoadBalancerV2Origin } from 'aws-cdk-lib/aws-cloudfront-origins';
 import { ApplicationLoadBalancer } from 'aws-cdk-lib/aws-elasticloadbalancingv2';
-import { Bucket, BucketEncryption, ObjectOwnership } from 'aws-cdk-lib/aws-s3';
-import { RemovalPolicy } from 'aws-cdk-lib/core';
 import { Construct } from 'constructs';
 
 interface DistributionResourcesProps {
@@ -21,18 +19,6 @@ export class DistributionResources extends Construct {
 
   constructor(scope: Construct, id: string, props: DistributionResourcesProps) {
     super(scope, id);
-
-    const distributionLoggingBucket = new Bucket(
-      this,
-      'DistributionLoggingBucket',
-      {
-        publicReadAccess: false,
-        removalPolicy: RemovalPolicy.DESTROY,
-        autoDeleteObjects: true,
-        encryption: BucketEncryption.S3_MANAGED,
-        objectOwnership: ObjectOwnership.BUCKET_OWNER_PREFERRED,
-      },
-    );
 
     this.distribution = new Distribution(this, 'Distribution', {
       defaultBehavior: {
@@ -59,8 +45,6 @@ export class DistributionResources extends Construct {
       },
       defaultRootObject: 'index.html',
       priceClass: PriceClass.PRICE_CLASS_100,
-      logBucket: distributionLoggingBucket,
-      enableLogging: true,
     });
   }
 }
