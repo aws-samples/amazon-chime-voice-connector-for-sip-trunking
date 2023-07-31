@@ -4,7 +4,7 @@
 
 ![Overview](images/SIP-Trunking-Overview.png)
 
-This demo will deploy and configure an Amazon Chime Voice Connector and an Elastic Compute Cloud (Amazon EC2) instance. This Amazon EC2 instance is deployed to run an [Asterisk](https://www.asterisk.org/) IP Private Branch Exchange (IPPBX) which can be used to make and recieve calls from the Public Switched Telephone Network (PSTN) using the [SIP Trunk](https://aws.amazon.com/chime/chime-sdk/features/) feature of Amazon Chime SDK. In this demo, we'll be using an Asterisk IPPBX, but many other IPPBXs can be used as described in the [Configuration Guides](https://aws.amazon.com/chime/chime-sdk/resources/). This Asterisk IPPBX will be configured to use a web client phone that can be used to make and recieve calls without installing a softphone.
+This demo will deploy and configure an Amazon Chime Voice Connector and an Elastic Compute Cloud (Amazon EC2) instance. This Amazon EC2 instance is deployed to run an [Asterisk](https://www.asterisk.org/) IP Private Branch Exchange (IPPBX) which can be used to make and receive calls from the Public Switched Telephone Network (PSTN) using the [SIP Trunk](https://aws.amazon.com/chime/chime-sdk/features/) feature of Amazon Chime SDK. In this demo, we'll be using an Asterisk IPPBX, but many other IPPBXs can be used as described in the [Configuration Guides](https://aws.amazon.com/chime/chime-sdk/resources/). This Asterisk IPPBX will be configured to use a web client phone that can be used to make and receive calls without installing a softphone.
 
 ## How It Works
 
@@ -49,7 +49,7 @@ Within the Asterisk server, this is configured in `pjsip.conf` file:
 [PSTNVoiceConnector]
 type=aor
 contact=sip:dr3rbaar376u5r4ntcnlq4.voiceconnector.chime.aws
-qualify_frequency=30  :arrow_left:
+qualify_frequency=30
 ```
 
 ### Origination
@@ -75,7 +75,7 @@ In this deployment, an example of the output will look like this:
 }
 ```
 
-This configuration indicates that a single route is configured for this Amazon Chime Voice Connector. This route will send traffic to IP address 198.51.100.204 on port 5060 using the UDP protocol. This configuration is typical for a single target, unecrypted SIP trunk.
+This configuration indicates that a single route is configured for this Amazon Chime Voice Connector. This route will send traffic to IP address 198.51.100.204 on port 5060 using the UDP protocol. This configuration is typical for a single target, unencrypted SIP trunk.
 
 Up to 10 routes can be added to a single Origination. These routes can be configured with different Priority and Weight. Within a single Priority, calls will be routed to Weights proportionally. For example:
 
@@ -144,7 +144,7 @@ This will display SIP messages in the Asterisk console while calls are being mad
 
 ### Inbound Call - PSTN -> IPPBX
 
-Exmaple INVITE
+Example INVITE
 
 ```sip
 <--- Received SIP request (953 bytes) from UDP:3.80.16.13:5060 --->
@@ -262,13 +262,11 @@ After downloading this capture, it can be viewed in [Wireshark](https://www.wire
 
 ![Wireshark](images/Wireshark.png)
 
-## Local Client
+### Client
 
-A web client based SIP phone is included in this demo. Once the demo is deployed and local client started, the SIP phone can be accessed at: `http://localhost:3000`
+A CloudFront Distribution has been deployed with this CDK. That Distribution can be used to access a soft phone that is being served from the EC2 instance. This simple client can be used to make and receive calls.
 
-![LocalClient](images/LocalClient.png)
-
-Calls can be recieved and made from this client.
+![Client](/images/Client.png)
 
 ## What Is Deployed
 
@@ -277,6 +275,8 @@ Calls can be recieved and made from this client.
   - Amazon EC2 - Asterisk Server
   - Elastic IP
   - Security Group
+  - Application Load Balancer
+- Cloudfront Distribution
 
 ## How To Use
 
@@ -287,15 +287,9 @@ Calls can be recieved and made from this client.
 - AWS Account with approriate permissions
 - [Service Quota](https://us-east-1.console.aws.amazon.com/servicequotas/home/services/chime/quotas) allowance for Phone Numbers
 
-### Infrastructure
-
 ```
 yarn launch
 ```
-
-### Local Client
-
-Use the Cloudfront Distribution
 
 ### Cleanup
 

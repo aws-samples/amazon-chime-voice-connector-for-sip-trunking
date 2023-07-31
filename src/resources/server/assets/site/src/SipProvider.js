@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { UserAgent, Registerer, Inviter, SessionState, Session } from 'sip.js';
-import SipUserAgent from './SipUserAgent';
-import PhoneNumberInput from './PhoneNumberInput';
 import CallControl from './CallControl';
 import MediaContainer from './MediaContainer';
 
@@ -12,7 +10,6 @@ import {
     AppLayout,
     TopNavigation,
     Header,
-    Button,
 } from '@cloudscape-design/components';
 
 const SIP_URI = process.env.SIP_URI || '';
@@ -272,7 +269,7 @@ const SipProvider = ({ children }) => {
             />
             <AppLayout
                 content={
-                    <ContentLayout header={<Header variant="h1">Amazon Chime SDK Voice Connector Phone</Header>}>
+                    <ContentLayout header={<Header variant="h1">Demo Phone</Header>}>
                         <SpaceBetween size="xl" direction="vertical">
                             {children}
                             <Container
@@ -281,7 +278,6 @@ const SipProvider = ({ children }) => {
                                         variant="h2"
                                         actions={
                                             <SpaceBetween size="xs" direction="horizontal">
-                                                {/* CallControl component */}
                                                 <CallControl
                                                     incomingCall={incomingCall}
                                                     sessionState={sessionState}
@@ -298,7 +294,6 @@ const SipProvider = ({ children }) => {
                                     </Header>
                                 }
                             >
-                                {/* MediaContainer component */}
                                 <MediaContainer
                                     sessionState={sessionState}
                                     onInvite={onInvite}
