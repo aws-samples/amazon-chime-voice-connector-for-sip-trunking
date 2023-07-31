@@ -70,6 +70,14 @@ export class VoiceConnectorForSIPTrunking extends Stack {
     new CfnOutput(this, 'phoneNumber', {
       value: amazonChimeSDKVoiceResources.phoneNumber.phoneNumber,
     });
+
+    new CfnOutput(this, 'voiceConnectorId', {
+      value: amazonChimeSDKVoiceResources.voiceConnector.voiceConnectorId,
+    });
+
+    new CfnOutput(this, 'setVoiceConnectorId', {
+      value: `export VOICECONNECTORID=${amazonChimeSDKVoiceResources.voiceConnector.voiceConnectorId}`,
+    });
   }
 }
 
