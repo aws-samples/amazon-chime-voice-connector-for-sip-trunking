@@ -1,3 +1,4 @@
-export * from './asterisk';
-export * from './voiceConnector';
+export * from './server';
+export * from './amazonChimeSDKVoice';
 export * from './vpc';
+export * from './distribution';

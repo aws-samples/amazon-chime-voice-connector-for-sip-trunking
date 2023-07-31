@@ -145,7 +145,7 @@
       "name": "launch",
       "steps": [
         {
-          "exec": "yarn && yarn projen && yarn build && yarn cdk bootstrap && yarn cdk deploy -O site/src/cdk-outputs.json"
+          "exec": "yarn && yarn projen && yarn build && yarn cdk bootstrap && yarn cdk deploy --require-approval never"
         }
       ]
     },
@@ -221,19 +221,19 @@
           "exec": "yarn upgrade npm-check-updates"
         },
         {
-          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='@types/prettier,got'"
+          "exec": "npm-check-updates --dep dev --upgrade --target=minor"
         },
         {
-          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='@types/prettier,got'"
+          "exec": "npm-check-updates --dep bundle --upgrade --target=minor"
         },
         {
-          "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='@types/prettier,got'"
+          "exec": "npm-check-updates --dep peer --upgrade --target=minor"
         },
         {
-          "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='@types/prettier,got'"
+          "exec": "npm-check-updates --dep prod --upgrade --target=minor"
         },
         {
-          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='@types/prettier,got'"
+          "exec": "npm-check-updates --dep optional --upgrade --target=minor"
         },
         {
           "exec": "yarn install --check-files"

@@ -10,11 +10,6 @@
       "type": "build"
     },
     {
-      "name": "@types/prettier",
-      "version": "2.6.0",
-      "type": "build"
-    },
-    {
       "name": "@typescript-eslint/eslint-plugin",
       "version": "^5",
       "type": "build"
@@ -26,7 +21,7 @@
     },
     {
       "name": "aws-cdk",
-      "version": "^2.23.0",
+      "version": "^2.83.0",
       "type": "build"
     },
     {
@@ -48,11 +43,6 @@
     {
       "name": "eslint",
       "version": "^8",
-      "type": "build"
-    },
-    {
-      "name": "got",
-      "version": "11.8.5",
       "type": "build"
     },
     {
@@ -87,7 +77,7 @@
     },
     {
       "name": "aws-cdk-lib",
-      "version": "^2.23.0",
+      "version": "^2.83.0",
       "type": "runtime"
     },
     {
@@ -97,6 +87,10 @@
     {
       "name": "constructs",
       "version": "^10.0.5",
+      "type": "runtime"
+    },
+    {
+      "name": "dotenv",
       "type": "runtime"
     }
   ],
