@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "aws-cdk-lib": "^2.83.0",
-    "cdk-amazon-chime-resources": "^2.4.48",
+    "cdk-amazon-chime-resources": "^2.4.49",
     "constructs": "^10.0.5",
     "dotenv": "^16.3.1"
   },
