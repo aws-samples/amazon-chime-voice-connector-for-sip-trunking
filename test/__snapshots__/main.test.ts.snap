@@ -2163,7 +2163,7 @@ usermod -a -G www-data ubuntu
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "3863dbe36cafbd9e5c7f9cf4f5f8cf4084b911e2ceaffd860c8878313fbc8856.zip",
+          "S3Key": "713feb5b92242afc1a5123fde6ca3e7791ac5a6b86ae762a68a992048681f030.zip",
         },
         "Description": "src/resources/pstn/pstn.lambda.ts",
         "Environment": Object {
@@ -2431,7 +2431,7 @@ usermod -a -G www-data ubuntu
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "3863dbe36cafbd9e5c7f9cf4f5f8cf4084b911e2ceaffd860c8878313fbc8856.zip",
+          "S3Key": "713feb5b92242afc1a5123fde6ca3e7791ac5a6b86ae762a68a992048681f030.zip",
         },
         "Description": "src/resources/pstn/pstn.lambda.ts",
         "Environment": Object {
