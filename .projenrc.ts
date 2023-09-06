@@ -54,9 +54,12 @@ upgradeSite.addJobs({
       },
       {
         run: 'yarn install --check-files --frozen-lockfile',
-        workingDirectory: 'resources/server/assets/site',
+        workingDirectory: 'src/resources/server/assets/site',
       },
-      { run: 'yarn upgrade', workingDirectory: 'resources/server/assets/site' },
+      {
+        run: 'yarn upgrade',
+        workingDirectory: 'src/resources/server/assets/site',
+      },
       {
         name: 'Create Pull Request',
         uses: 'peter-evans/create-pull-request@v4',
