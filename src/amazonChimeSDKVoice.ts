@@ -1,11 +1,11 @@
 import { CfnEIP } from 'aws-cdk-lib/aws-ec2';
 import {
   ChimePhoneNumber,
-  PhoneCountry,
   PhoneProductType,
   PhoneNumberType,
   ChimeVoiceConnector,
   Protocol,
+  PhoneCountry,
 } from 'cdk-amazon-chime-resources';
 import { Construct } from 'constructs';
 interface VoiceConnectorProps {
@@ -22,10 +22,10 @@ export class AmazonChimeSDKVoiceResources extends Construct {
       this,
       'voiceConnectorPhoneNumber',
       {
-        phoneState: 'IL',
-        phoneCountry: PhoneCountry.US,
         phoneProductType: PhoneProductType.VC,
-        phoneNumberType: PhoneNumberType.LOCAL,
+        phoneCountry: PhoneCountry.US,
+        phoneNumberType: PhoneNumberType.TOLLFREE,
+        phoneNumberTollFreePrefix: 855,
       },
     );
 
@@ -47,7 +47,10 @@ export class AmazonChimeSDKVoiceResources extends Construct {
           },
         ],
         encryption: false,
-        loggingConfiguration: { enableMediaMetricLogs: true, enableSIPLogs: true },
+        loggingConfiguration: {
+          enableMediaMetricLogs: true,
+          enableSIPLogs: true,
+        },
       },
     );
 
