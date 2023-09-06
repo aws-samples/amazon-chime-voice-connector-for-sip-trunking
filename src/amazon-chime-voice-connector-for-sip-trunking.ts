@@ -7,6 +7,7 @@ import {
   DistributionResources,
   ServerResources,
   AmazonChimeSDKVoiceResources,
+  CognitoResources,
 } from '.';
 
 config();
@@ -14,6 +15,7 @@ config();
 interface VoiceConnectorForSIPTrunkingProps extends StackProps {
   logLevel: string;
   sshPubKey: string;
+  allowedDomain?: string;
 }
 
 export class VoiceConnectorForSIPTrunking extends Stack {
@@ -32,6 +34,10 @@ export class VoiceConnectorForSIPTrunking extends Stack {
         asteriskEip: vpcResources.serverEip,
       },
     );
+
+    const cognitoResources = new CognitoResources(this, 'Cognito', {
+      allowedDomain: props.allowedDomain || '',
+    });
 
     const distributionResources = new DistributionResources(
       this,
@@ -53,6 +59,10 @@ export class VoiceConnectorForSIPTrunking extends Stack {
       sshPubKey: props.sshPubKey,
       applicationLoadBalancer: vpcResources.applicationLoadBalancer,
       distribution: distributionResources.distribution,
+      userPool: cognitoResources.userPool,
+      userPoolClient: cognitoResources.userPoolClient,
+      userPoolRegion: cognitoResources.userPoolRegion,
+      identityPool: cognitoResources.identityPool,
     });
 
     new CfnOutput(this, 'DistributionUrl', {
@@ -89,6 +99,7 @@ const devEnv = {
 const stackProps = {
   logLevel: process.env.LOG_LEVEL || 'INFO',
   sshPubKey: process.env.SSH_PUB_KEY || ' ',
+  allowedDomain: process.env.ALLOWED_DOMAIN || ' ',
 };
 
 const app = new App();

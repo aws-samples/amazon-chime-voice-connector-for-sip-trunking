@@ -1,9 +1,13 @@
+import { Stack } from 'aws-cdk-lib';
 import {
   AllowedMethods,
   CachePolicy,
   Distribution,
   OriginProtocolPolicy,
+  OriginRequestCookieBehavior,
+  OriginRequestHeaderBehavior,
   OriginRequestPolicy,
+  OriginRequestQueryStringBehavior,
   PriceClass,
   ViewerProtocolPolicy,
 } from 'aws-cdk-lib/aws-cloudfront';
@@ -19,6 +23,17 @@ export class DistributionResources extends Construct {
 
   constructor(scope: Construct, id: string, props: DistributionResourcesProps) {
     super(scope, id);
+
+    const removeCookiesPolicy = new OriginRequestPolicy(
+      this,
+      'removeCookiesPolicy',
+      {
+        originRequestPolicyName: `RemoveCookies-${Stack.of(this).stackName}`,
+        cookieBehavior: OriginRequestCookieBehavior.none(),
+        headerBehavior: OriginRequestHeaderBehavior.denyList('Cookie'),
+        queryStringBehavior: OriginRequestQueryStringBehavior.none(),
+      },
+    );
 
     this.distribution = new Distribution(this, 'Distribution', {
       defaultBehavior: {
@@ -40,7 +55,7 @@ export class DistributionResources extends Construct {
           viewerProtocolPolicy: ViewerProtocolPolicy.HTTPS_ONLY,
           cachePolicy: CachePolicy.CACHING_DISABLED,
           allowedMethods: AllowedMethods.ALLOW_ALL,
-          originRequestPolicy: OriginRequestPolicy.ALL_VIEWER,
+          originRequestPolicy: removeCookiesPolicy,
         },
       },
       defaultRootObject: 'index.html',

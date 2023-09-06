@@ -9,11 +9,13 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@aws-amplify/ui-react": "^5.1.1",
     "@cloudscape-design/components": "^3.0.303",
     "@cloudscape-design/design-tokens": "^3.0.15",
     "@cloudscape-design/global-styles": "^1.0.9",
     "@types/react": "^18.2.5",
     "@types/react-dom": "^18.2.4",
+    "aws-amplify": "^5.3.10",
     "dotenv-webpack": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
