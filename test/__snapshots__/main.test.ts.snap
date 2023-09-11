@@ -109,7 +109,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "ba5407117985fa148f61d8537da4904529e5c8264aed5d840f0a26700b5471fc.zip",
+          "S3Key": "f7ea374f7cc7ecbfa22fd671f8a9676e0f3f8978ba5fdbc52d48e42e03f81c55.zip",
         },
         "Handler": "index.handler",
         "Role": Object {
@@ -1006,7 +1006,7 @@ ln -s /usr/local/bin/cfn-* /opt/aws/bin/
           },
         ],
         "SourceObjectKeys": Array [
-          "6a98d775a761ff04f84f1d3ec23c3e165000f0fb5c06799f6893d243b604f92c.zip",
+          "42a496d43155f47464e63884e5f9b18910f869ce869b479cea680f7b31d407c1.zip",
         ],
       },
       "Type": "Custom::CDKBucketDeployment",
