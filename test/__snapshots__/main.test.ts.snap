@@ -102,8 +102,11 @@ Object {
   "Resources": Object {
     "AsteriskEIPAssociation3A327365": Object {
       "Properties": Object {
-        "EIP": Object {
-          "Ref": "VPCasteriskEip406AFABB",
+        "AllocationId": Object {
+          "Fn::GetAtt": Array [
+            "VPCasteriskEip406AFABB",
+            "AllocationId",
+          ],
         },
         "InstanceId": Object {
           "Ref": "AsteriskInstanceDB134462b64acbbf22e26134",

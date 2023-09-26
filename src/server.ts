@@ -128,35 +128,6 @@ export class ServerResources extends Construct {
       'ln -s /root/aws-cfn-bootstrap-latest/init/ubuntu/cfn-hup /etc/init.d/cfn-hup',
       'ln -s /usr/local/bin/cfn-* /opt/aws/bin/',
     );
-    // userData.addCommands(
-    //   'apt-get update',
-    //   'curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -',
-    //   'while fuser /var/lib/dpkg/lock >/dev/null 2>&1 ; do sleep 1 ; done',
-    //   'apt-get install -y python3-pip unzip jq asterisk nodejs nginx',
-    //   'while fuser /var/lib/dpkg/lock >/dev/null 2>&1 ; do sleep 1 ; done',
-    //   'curl "https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/arm64/latest/amazon-cloudwatch-agent.deb" -o "amazon-cloudwatch-agent.deb"',
-    //   'dpkg -i -E ./amazon-cloudwatch-agent.deb',
-    //   'while fuser /var/lib/dpkg/lock >/dev/null 2>&1 ; do sleep 1 ; done',
-    //   'corepack enable',
-    //   'mkdir -p /var/lib/asterisk/sounds/en',
-    //   'mkdir -p /opt/aws/bin',
-    //   'pip3 install https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-py3-latest.tar.gz',
-    //   'ln -s /root/aws-cfn-bootstrap-latest/init/ubuntu/cfn-hup /etc/init.d/cfn-hup',
-    //   'ln -s /usr/local/bin/cfn-* /opt/aws/bin/',
-    //   'curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip"',
-    //   'unzip -q awscliv2.zip',
-    //   './aws/install',
-    //   'echo AWS CLI installed',
-    //   'aws s3 cp s3://' +
-    //     assetBucket.bucketName +
-    //     '/audio/AGENT_Retail40.wav /var/lib/asterisk/sounds/en/AGENT_Retail40.wav',
-    //   'echo Audio files copied',
-    //   'mkdir -p /home/ubuntu/site',
-    //   'aws s3 cp s3://' +
-    //     assetBucket.bucketName +
-    //     '/site /home/ubuntu/site --recursive',
-    //   'usermod -a -G www-data ubuntu',
-    // );
 
     const ec2InstanceSecurityGroup = new SecurityGroup(
       this,
@@ -176,80 +147,6 @@ export class ServerResources extends Construct {
         },
       ],
       securityGroup: ec2InstanceSecurityGroup,
-      // init: CloudFormationInit.fromConfigSets({
-      //   configSets: {
-      //     default: ['config'],
-      //   },
-      //   configs: {
-      //     config: new InitConfig([
-      //       InitFile.fromObject('/etc/config.json', {
-      //         IP: props.serverEip.ref,
-      //         REGION: Stack.of(this).region,
-      //         PHONE_NUMBER: props.phoneNumber.phoneNumber,
-      //         VOICE_CONNECTOR: props.voiceConnector.voiceConnectorId,
-      //         STACK_ID: Stack.of(this).artifactId,
-      //       }),
-      //       InitFile.fromFileInline(
-      //         '/tmp/amazon-cloudwatch-agent.json',
-      //         './src/resources/server/config/amazon-cloudwatch-agent.json',
-      //       ),
-      //       InitFile.fromFileInline(
-      //         '/etc/asterisk/pjsip.conf',
-      //         'src/resources/server/config/pjsip.conf',
-      //       ),
-      //       InitFile.fromFileInline(
-      //         '/etc/asterisk/asterisk.conf',
-      //         'src/resources/server/config/asterisk.conf',
-      //       ),
-      //       InitFile.fromFileInline(
-      //         '/etc/asterisk/http.conf',
-      //         'src/resources/server/config/http.conf',
-      //       ),
-      //       InitFile.fromFileInline(
-      //         '/etc/asterisk/rtp.conf',
-      //         'src/resources/server/config/rtp.conf',
-      //       ),
-      //       InitFile.fromFileInline(
-      //         '/etc/asterisk/logger.conf',
-      //         'src/resources/server/config/logger.conf',
-      //       ),
-      //       InitFile.fromFileInline(
-      //         '/etc/asterisk/extensions.conf',
-      //         'src/resources/server/config/extensions.conf',
-      //       ),
-      //       InitFile.fromFileInline(
-      //         '/etc/asterisk/modules.conf',
-      //         'src/resources/server/config/modules.conf',
-      //       ),
-      //       InitFile.fromFileInline(
-      //         '/etc/config_asterisk.sh',
-      //         'src/resources/server/config/config_asterisk.sh',
-      //       ),
-      //       InitFile.fromFileInline(
-      //         '/etc/nginx/sites-available/default',
-      //         'src/resources/server/nginx/default',
-      //       ),
-      //       InitFile.fromString(
-      //         '/home/ubuntu/.ssh/authorized_keys',
-      //         props.sshPubKey + '\n',
-      //       ),
-      //       InitFile.fromString(
-      //         '/home/ubuntu/site/.env',
-      //         `SIP_URI=sip:${props.phoneNumber.phoneNumber}@${
-      //           props.distribution.domainName
-      //         }\nSIP_PASSWORD=${
-      //           Stack.of(this).artifactId
-      //         }\nWEBSOCKET_URL=wss://${
-      //           props.distribution.domainName
-      //         }/ws\nVOICE_CONNECTOR_PHONE=${
-      //           props.phoneNumber.phoneNumber
-      //         }\nSERVER_IP=${props.serverEip.ref}\n`,
-      //       ),
-      //       InitCommand.shellCommand('chmod +x /etc/config_asterisk.sh'),
-      //       InitCommand.shellCommand('/etc/config_asterisk.sh'),
-      //     ]),
-      //   },
-      // }),
       init: CloudFormationInit.fromConfigSets({
         configSets: {
           default: [
@@ -472,7 +369,7 @@ export class ServerResources extends Construct {
     );
 
     new CfnEIPAssociation(this, 'EIP Association', {
-      eip: props.serverEip.ref,
+      allocationId: props.serverEip.attrAllocationId,
       instanceId: ec2Instance.instanceId,
     });
 
