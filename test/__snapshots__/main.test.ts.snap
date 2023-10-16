@@ -1152,6 +1152,7 @@ ln -s /usr/local/bin/cfn-* /opt/aws/bin/
               "Action": Array [
                 "s3:GetObject*",
                 "s3:GetBucket*",
+                "s3:HeadObject",
                 "s3:List*",
                 "s3:DeleteObject*",
                 "s3:PutObject",
@@ -1684,6 +1685,7 @@ ln -s /usr/local/bin/cfn-* /opt/aws/bin/
               "Action": Array [
                 "s3:GetObject*",
                 "s3:GetBucket*",
+                "s3:HeadObject",
                 "s3:List*",
               ],
               "Effect": "Allow",
@@ -1725,6 +1727,7 @@ ln -s /usr/local/bin/cfn-* /opt/aws/bin/
               "Action": Array [
                 "s3:GetObject*",
                 "s3:GetBucket*",
+                "s3:HeadObject",
                 "s3:List*",
                 "s3:DeleteObject*",
                 "s3:PutObject",
@@ -1779,7 +1782,7 @@ ln -s /usr/local/bin/cfn-* /opt/aws/bin/
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "3207bfa778c31fe25d6d1f93a8b7955264adbd9a85b20c2ca13249a313f2fcb0.zip",
+          "S3Key": "4e1c22bfc3a8c9768d5a168814ab721614b22249283525e4b079d7b923a0442b.zip",
         },
         "Handler": "__entrypoint__.handler",
         "MemorySize": 128,
