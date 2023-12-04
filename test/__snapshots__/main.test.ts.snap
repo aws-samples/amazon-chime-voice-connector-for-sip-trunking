@@ -1620,7 +1620,7 @@ ln -s /usr/local/bin/cfn-* /opt/aws/bin/
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "0b1f5aa55d045066ed91316b823a808060c12737e0575ab7cefe2335324108b0.zip",
+          "S3Key": "e976a796f036a5efbf44b99e44cfb5a961df08d8dbf7cd37e60bf216fb982a00.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -1779,7 +1779,7 @@ ln -s /usr/local/bin/cfn-* /opt/aws/bin/
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "b23a390e022bbaea7980644a3fc46b759d1ceca0fc0ac59b1cef24730a1776a0.zip",
+          "S3Key": "3dbb7f8bfabd21217e28fd66955db9a508d6abf97d12a0212a2606cc19ebc219.zip",
         },
         "Handler": "__entrypoint__.handler",
         "MemorySize": 128,
