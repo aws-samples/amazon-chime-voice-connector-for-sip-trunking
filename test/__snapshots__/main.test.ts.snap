@@ -925,7 +925,7 @@ ln -s /usr/local/bin/cfn-* /opt/aws/bin/
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "e2277687077a2abf9ae1af1cc9565e6715e2ebb62f79ec53aa75a1af9298f642.zip",
+          "S3Key": "3fb6287214999ddeafa7cd0e3e58bc5144c8678bb720f3b5e45e8fd32f333eb3.zip",
         },
         "Description": "/opt/awscli/aws",
       },
@@ -955,7 +955,7 @@ ln -s /usr/local/bin/cfn-* /opt/aws/bin/
           },
         ],
         "SourceObjectKeys": Array [
-          "ad5756982e552e596176e8e0c3a69bf90128395b9cdfe93d15b24ddac48fa0b2.zip",
+          "52405e61a59a652ad35ce47ee96f8cb0072cfef89a1aebdad316abecb6c74b10.zip",
         ],
       },
       "Type": "Custom::CDKBucketDeployment",
@@ -970,6 +970,7 @@ ln -s /usr/local/bin/cfn-* /opt/aws/bin/
           "Statement": Array [
             Object {
               "Action": Array [
+                "s3:PutBucketPolicy",
                 "s3:GetBucket*",
                 "s3:List*",
                 "s3:DeleteObject*",
@@ -1619,7 +1620,7 @@ ln -s /usr/local/bin/cfn-* /opt/aws/bin/
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "9eb41a5505d37607ac419321497a4f8c21cf0ee1f9b4a6b29aa04301aea5c7fd.zip",
+          "S3Key": "e976a796f036a5efbf44b99e44cfb5a961df08d8dbf7cd37e60bf216fb982a00.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -1778,7 +1779,7 @@ ln -s /usr/local/bin/cfn-* /opt/aws/bin/
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "0c32868456a3bb3f2617e8b67e3f8f689826193e7c014535b7e0cd61290776ac.zip",
+          "S3Key": "f2221079a7f1c805787eefce7733410a224050adb7114467cb1a6df650447c03.zip",
         },
         "Handler": "__entrypoint__.handler",
         "MemorySize": 128,
@@ -1910,7 +1911,7 @@ ln -s /usr/local/bin/cfn-* /opt/aws/bin/
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "5194f926380567b6fdffc61629afdad2afc818614cb227df45e499c69db163a7.zip",
+          "S3Key": "b7f33614a69548d6bafe224d751a7ef238cde19097415e553fe8b63a4c8fd8a6.zip",
         },
         "Description": Object {
           "Fn::Join": Array [
