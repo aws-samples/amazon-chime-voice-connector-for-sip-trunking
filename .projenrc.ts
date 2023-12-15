@@ -13,6 +13,7 @@ const project = new awscdk.AwsCdkTypeScriptApp({
   tsconfig: { include: ['src/resources/server/assets/site/**/*.ts?'] },
   eslintOptions: { ignorePatterns: ['src/resources/server/assets/site/**'] },
   projenrcTs: true,
+  jest: false,
   depsUpgradeOptions: {
     ignoreProjen: false,
     workflowOptions: {
