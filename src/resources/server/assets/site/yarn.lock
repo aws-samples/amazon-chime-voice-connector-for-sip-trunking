@@ -2858,9 +2858,9 @@
     to-fast-properties "^2.0.0"
 
 "@cloudscape-design/collection-hooks@^1.0.0":
-  version "1.0.31"
-  resolved "https://registry.yarnpkg.com/@cloudscape-design/collection-hooks/-/collection-hooks-1.0.31.tgz#23c2a7d6f24c1a2dbdd23227a7f649b6152d5a81"
-  integrity sha512-gLG+4s6el5lxJTq4ScF6Ya15BR7Hh6q/KuTLWs/YJrkluXAH6yuQOuqy7/Y+3d0uSAaApHPTFh3L/WYiYUUAeQ==
+  version "1.0.32"
+  resolved "https://registry.yarnpkg.com/@cloudscape-design/collection-hooks/-/collection-hooks-1.0.32.tgz#815e4ce44414593ea3903e3eace72ced75740289"
+  integrity sha512-wdOGW+W8+5rYYSGPab/v7BOy0P8mC6aUtwwN3w2AWE3n3LrK/Wqzsx77r/m4zlLdtkhZFnsnSBpT14OIw8ve/Q==
 
 "@cloudscape-design/component-toolkit@^1.0.0-beta":
   version "1.0.0-beta.30"
@@ -2871,9 +2871,9 @@
     tslib "^2.3.1"
 
 "@cloudscape-design/components@^3.0.303":
-  version "3.0.463"
-  resolved "https://registry.yarnpkg.com/@cloudscape-design/components/-/components-3.0.463.tgz#41cd1f81240217cedb723762f161ea248bc5fd28"
-  integrity sha512-a99RC9KRy31f0SlI3c7nJnd4N7zK1tEiGIVkR5hb53yvfuMDAVPDV9Ud502wV8mgCFlX5x5hF1VmKWjWWWs3pw==
+  version "3.0.469"
+  resolved "https://registry.yarnpkg.com/@cloudscape-design/components/-/components-3.0.469.tgz#7bbab7565bcb618798a51d00a906f075cf76f810"
+  integrity sha512-5inuF0wl7y22fnr/Y8xEBQPQXQvgdLy3ul99M92NjSo8UBi8mGYxgV6atniFjtwMPQca5bsbaz9hzq/rTA79AA==
   dependencies:
     "@cloudscape-design/collection-hooks" "^1.0.0"
     "@cloudscape-design/component-toolkit" "^1.0.0-beta"
@@ -2897,27 +2897,27 @@
     weekstart "^1.1.0"
 
 "@cloudscape-design/design-tokens@^3.0.15":
-  version "3.0.30"
-  resolved "https://registry.yarnpkg.com/@cloudscape-design/design-tokens/-/design-tokens-3.0.30.tgz#b904a50287bed8d59b111286f7862ff4ab1da7dd"
-  integrity sha512-gLfdya/DINUGDPEBdwOOnbguPczEA7ysRKNJjXyFDseYjvVze8KHKvk+NFZd5aYJmR7tl4fXwv+z2n2QBAs1Ag==
+  version "3.0.31"
+  resolved "https://registry.yarnpkg.com/@cloudscape-design/design-tokens/-/design-tokens-3.0.31.tgz#2c7cde6019064c9de5df591bafd27ef3a8510947"
+  integrity sha512-FCZOStmv2jpxakQDr42VAIYXLNTaTVrwA3q3QuYledMBWruK5acOGKUpPm9D64T1DDimAz7EWreDKg6dN1n++g==
 
 "@cloudscape-design/global-styles@^1.0.9":
-  version "1.0.19"
-  resolved "https://registry.yarnpkg.com/@cloudscape-design/global-styles/-/global-styles-1.0.19.tgz#926be0db3941421bb847bce7a1760cf359f381fe"
-  integrity sha512-FM0FKZDpI0a6KGcS54Xk1MhEmMH8E9JOsLW/Ge2DFdxs+PAutUW/GondzCmSGXS8nXkDvlfH1DlFs17l6yWT4g==
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/@cloudscape-design/global-styles/-/global-styles-1.0.20.tgz#3d3e9a7eb55a455189b341c7949471718958e05e"
+  integrity sha512-eEU3o7fZSRtIQVcFj1vRtheDFktRdAMMIidihrpNHqWVZzazFe0Z22vll684Yzy9TQ5R0HXKKupZLgKyC+Ia8w==
 
 "@cloudscape-design/test-utils-core@^1.0.0":
-  version "1.0.20"
-  resolved "https://registry.yarnpkg.com/@cloudscape-design/test-utils-core/-/test-utils-core-1.0.20.tgz#f6990bdaa383a8e675a42e43e4b3c32dd109a9f4"
-  integrity sha512-pIujWZwuED9Btjdw/hGlC0PjV6Yyd+K6sAk3AHFoyknJ3uMAXmheoUWD3UHAcG0T/rbJlPurH3a8nV/MyzPtww==
+  version "1.0.21"
+  resolved "https://registry.yarnpkg.com/@cloudscape-design/test-utils-core/-/test-utils-core-1.0.21.tgz#47e3c72aff0acfac57d02db5ff3a1afc346e850f"
+  integrity sha512-Kjxtl1ImQLmJ5SJ3PNF0hrtEbKidcZqk3E+iY4dLbJOI3sWh2TwoEpH5i4QEfO2GMtkMNzi41V4mmI4e4sydAw==
   dependencies:
     css-selector-tokenizer "^0.8.0"
     css.escape "^1.5.1"
 
 "@cloudscape-design/theming-runtime@^1.0.0":
-  version "1.0.38"
-  resolved "https://registry.yarnpkg.com/@cloudscape-design/theming-runtime/-/theming-runtime-1.0.38.tgz#d339dddf5b8597c88f30c227fb82e57a09274859"
-  integrity sha512-gw9r8vYUXf2EauOLjWlPvQFc3p8wqK5fxW/W8mjgz5CuQkhsPpQWPlUTfMpJYxH/wIl302yezgcQbYqp4F2ysA==
+  version "1.0.39"
+  resolved "https://registry.yarnpkg.com/@cloudscape-design/theming-runtime/-/theming-runtime-1.0.39.tgz#31fd87cc4e638e2808d6b2d71457a03758c1547f"
+  integrity sha512-bc3ATkJhQ2PVomnLtBINcT3szYk6daPzBDCM+rwR9RZQ1a7T611R+EsPjyoKm355Z4xn/3hWKtw+IArg6vn0+A==
   dependencies:
     tslib "^2.4.0"
 
@@ -3477,9 +3477,9 @@
     "@types/estree" "*"
 
 "@types/eslint@*":
-  version "8.44.9"
-  resolved "https://registry.yarnpkg.com/@types/eslint/-/eslint-8.44.9.tgz#5799663009645637bd1c45b2e1a7c8f4caf89534"
-  integrity sha512-6yBxcvwnnYoYT1Uk2d+jvIfsuP4mb2EdIxFnrPABj5a/838qe5bGkNLFOiipX4ULQ7XVQvTxOh7jO+BTAiqsEw==
+  version "8.56.0"
+  resolved "https://registry.yarnpkg.com/@types/eslint/-/eslint-8.56.0.tgz#e28d045b8e530a33c9cbcfbf02332df0d1380a2c"
+  integrity sha512-FlsN0p4FhuYRjIxpbdXovvHQhtlG05O1GG/RNWvdAxTboR438IOTwmrY/vLA+Xfgg06BTkP045M3vpFwTMv1dg==
   dependencies:
     "@types/estree" "*"
     "@types/json-schema" "*"
@@ -3569,9 +3569,9 @@
   integrity sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==
 
 "@types/qs@*":
-  version "6.9.10"
-  resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.9.10.tgz#0af26845b5067e1c9a622658a51f60a3934d51e8"
-  integrity sha512-3Gnx08Ns1sEoCrWssEgTSJs/rsT2vhGP+Ja9cnnk9k4ALxinORlQneLXFeFKOTJMOeZUFD1s7w+w2AphTpvzZw==
+  version "6.9.11"
+  resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.9.11.tgz#208d8a30bc507bd82e03ada29e4732ea46a6bbda"
+  integrity sha512-oGk0gmhnEJK4Yyk+oI7EfXsLayXatCWPHary1MtcmbAifkobT9cM9yutG/hZKIseOU0MqbIwQ/u2nn/Gb+ltuQ==
 
 "@types/range-parser@*":
   version "1.2.7"
@@ -4160,9 +4160,9 @@ camelcase@^5.0.0, camelcase@^5.3.1:
   integrity sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==
 
 caniuse-lite@^1.0.30001565:
-  version "1.0.30001570"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001570.tgz#b4e5c1fa786f733ab78fc70f592df6b3f23244ca"
-  integrity sha512-+3e0ASu4sw1SWaoCtvPeyXp+5PsjigkSt8OXZbF9StH5pQWbxEjLAZE3n8Aup5udop1uRiKA7a4utUk/uoSpUw==
+  version "1.0.30001571"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001571.tgz#4182e93d696ff42930f4af7eba515ddeb57917ac"
+  integrity sha512-tYq/6MoXhdezDLFZuCO/TKboTzuQ/xR5cFdgXPfDtM7/kchBO3b4VWghE/OAi/DV7tTdhmLjZiZBZi1fA/GheQ==
 
 capital-case@^1.0.4:
   version "1.0.4"
@@ -4668,9 +4668,9 @@ ee-first@1.1.1:
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
 electron-to-chromium@^1.4.601:
-  version "1.4.614"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.614.tgz#2fe789d61fa09cb875569f37c309d0c2701f91c0"
-  integrity sha512-X4ze/9Sc3QWs6h92yerwqv7aB/uU8vCjZcrMjA8N9R1pjMFRe44dLsck5FzLilOYvcXuDn93B+bpGYyufc70gQ==
+  version "1.4.616"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.616.tgz#4bddbc2c76e1e9dbf449ecd5da3d8119826ea4fb"
+  integrity sha512-1n7zWYh8eS0L9Uy+GskE0lkBUNK83cXTVJI0pU3mGprFsbfSdAc15VTFbo+A+Bq4pwstmL30AVcEU3Fo463lNg==
 
 emoji-regex@^8.0.0:
   version "8.0.0"
@@ -5165,9 +5165,9 @@ html-minifier-terser@^6.0.2:
     terser "^5.10.0"
 
 html-webpack-plugin@^5.5.1:
-  version "5.5.4"
-  resolved "https://registry.yarnpkg.com/html-webpack-plugin/-/html-webpack-plugin-5.5.4.tgz#517a48e6f046ff1ae1a172c983cd993eb79d2f6a"
-  integrity sha512-3wNSaVVxdxcu0jd4FpQFoICdqgxs4zIQQvj+2yQKFfBOnLETQ6X5CDWdeasuGlSsooFlMkEioWDTqBv1wvw5Iw==
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/html-webpack-plugin/-/html-webpack-plugin-5.6.0.tgz#50a8fa6709245608cb00e811eacecb8e0d7b7ea0"
+  integrity sha512-iwaY4wzbe48AfKLZ/Cc8k0L+FKG6oSNRaZ8x5A/T/IVDGyXcbHncM9TdDa93wn0FsSm82FhTKW7f3vS61thXAw==
   dependencies:
     "@types/html-minifier-terser" "^6.0.0"
     html-minifier-terser "^6.0.2"
@@ -5955,9 +5955,9 @@ postcss-modules-local-by-default@^4.0.3:
     postcss-value-parser "^4.1.0"
 
 postcss-modules-scope@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/postcss-modules-scope/-/postcss-modules-scope-3.0.0.tgz#9ef3151456d3bbfa120ca44898dfca6f2fa01f06"
-  integrity sha512-hncihwFA2yPath8oZ15PZqvWGkWf+XUfQgUGamS4LqoP1anQLOsOJw0vr7J7IwLpoY9fatA2qiGUGmuZL0Iqlg==
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/postcss-modules-scope/-/postcss-modules-scope-3.1.0.tgz#fbfddfda93a31f310f1d152c2bb4d3f3c5592ee0"
+  integrity sha512-SaIbK8XW+MZbd0xHPf7kdfA/3eOt7vxJ72IRecn3EzuZVLr1r0orzf0MX/pN8m+NMDoo6X/SQd8oeKqGZd8PXg==
   dependencies:
     postcss-selector-parser "^6.0.4"
 
