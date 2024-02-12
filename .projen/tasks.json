@@ -206,7 +206,7 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,aws-cdk,esbuild,eslint-import-resolver-typescript,eslint-plugin-import,eslint,projen,ts-node,typescript,aws-cdk-lib,cdk-amazon-chime-resources,constructs,dotenv"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=esbuild,eslint-import-resolver-typescript,eslint-plugin-import,projen,ts-node,typescript,cdk-amazon-chime-resources,dotenv"
         },
         {
           "exec": "yarn install --check-files"
