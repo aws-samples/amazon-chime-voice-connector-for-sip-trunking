@@ -28,7 +28,7 @@
     "@typescript-eslint/eslint-plugin": "^6",
     "@typescript-eslint/parser": "^6",
     "aws-cdk": "^2.83.0",
-    "esbuild": "^0.20.1",
+    "esbuild": "^0.20.2",
     "eslint": "^8",
     "eslint-import-resolver-typescript": "^2.7.1",
     "eslint-plugin-import": "^2.29.1",
@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "aws-cdk-lib": "^2.83.0",
-    "cdk-amazon-chime-resources": "^3.1.17",
+    "cdk-amazon-chime-resources": "^3.2.1",
     "constructs": "^10.0.5",
     "dotenv": "^16.4.5"
   },
