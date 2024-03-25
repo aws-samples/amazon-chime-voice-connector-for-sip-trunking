@@ -32,13 +32,13 @@
     "eslint": "^8",
     "eslint-import-resolver-typescript": "^2.7.1",
     "eslint-plugin-import": "^2.29.1",
-    "projen": "^0.80.10",
+    "projen": "^0.80.12",
     "ts-node": "^10",
     "typescript": "^4.9.5"
   },
   "dependencies": {
     "aws-cdk-lib": "^2.83.0",
-    "cdk-amazon-chime-resources": "^3.2.1",
+    "cdk-amazon-chime-resources": "^3.2.2",
     "constructs": "^10.0.5",
     "dotenv": "^16.4.5"
   },
