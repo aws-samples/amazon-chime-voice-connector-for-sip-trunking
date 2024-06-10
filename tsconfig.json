@@ -31,7 +31,5 @@
     "src/**/*.ts",
     "src/resources/server/assets/site/**/*.ts?"
   ],
-  "exclude": [
-    "cdk.out"
-  ]
+  "exclude": []
 }
