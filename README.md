@@ -243,7 +243,7 @@ a=maxptime:150
 a=sendrecv
 ```
 
-This INVITE represents a call from +16185558387 to +18155558245. This INVITE was sent from 198.51.100.204:5060 to 198.51.100.204:5060 using UDP.
+This INVITE represents a call from +16185558387 to +18155558245. This INVITE was sent from 198.51.100.204:5060 to dr3rbaar376u5r4ntcnlq4.voiceconnector.chime.aws:5060 using UDP.
 
 ```
 <--- Transmitting SIP request (1413 bytes) to UDP:198.51.100.204:5060 --->
